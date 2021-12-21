@@ -9,17 +9,17 @@
             <div class="ajaxcart__product">
                 <div class="ajaxcart row" data-line="{{line}}">
 
-                    <div class="grid__item one-quarter no-padding">
+                    <div class="flex__item one-quarter no-padding">
                         <a href="{{url}}" class="ajaxcart__product-image"><img src="{{img}}" alt=""></a>
                     </div>
-                    <div class="grid__item three-quarters ajaxcart-right">
+                    <div class="flex__item three-quarters ajaxcart-right">
                         <p class="ajax-rtinnerleft">
                             <a href="{{url}}" class="ajaxcart__product-name">{{name}}</a>
                             {% endraw %}{% raw %}
                         </p>
                         <p class="ajax-rtinnerright">{{{price}}}</p>
 
-                        <div class="grid__item one-whole no-padding">
+                        <div class="flex__item one-whole no-padding">
 
                             <div class="ajaxcart__qty">
                                 <button type="button"
@@ -34,13 +34,13 @@
                                 <button type="button"
                                         class="ajaxcart__qty-adjust ajaxcart__qty--minus quantity-increment"
                                         data-id="{{id}}" data-qty="{{itemMinus}}" data-line="{{line}}">
-                                    <span>&minus;</span>
+                                    <span>-</span>
                                 </button>
                             </div>
-                            <div class="ajaxremove">
+                            <!-- <div class="ajaxremove">
                                 <a href="/cart/change?line={{line}}&amp;quantity=0" class="ajaxifyCartremove"
                                    data-line="{{line}}">Remove</a>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
@@ -51,7 +51,7 @@
 
             {% endraw %}{% raw %}
         </div>
-        <div class="ajaxcart__footer row">
+        <div class="ajaxcart__footer">
             <div class="ajaxcart__footer-subtotal">
                 <div class="ajaxsubtext">
                     <p><strong>{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %}</strong></p>
