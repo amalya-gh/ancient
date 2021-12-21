@@ -1,0 +1,76 @@
+{
+  "current": {
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "align_logo": "left",
+          "logo": "shopify:\/\/shop_images\/logo.png",
+          "logo_max_width": 250,
+          "main_linklist": "main-menu",
+          "message": false,
+          "home_page_only": true,
+          "message_text": "Announce something here",
+          "message_link": "",
+          "color_bg": "#3a3a3a",
+          "color_text": "#ffffff"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "show_payment_icons": false,
+          "color_footer_bg": "#f6f6f6",
+          "color_footer_text": "#333232",
+          "show_locale_selector": true,
+          "show_currency_selector": true
+        }
+      },
+      "16400771792bfda6ee": {
+        "type": "slideshow",
+        "blocks": {
+          "16400771792bfda6ee-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Background_a01f90aa-ae18-4cd4-bb74-c27e62195815.png",
+              "alignment": "center center",
+              "slide_title": "Image slide",
+              "subheading": "Tell your brand's story through images",
+              "button_label": "Start Shopping",
+              "button_link": "shopify:\/\/collections\/vikings"
+            }
+          },
+          "16400771792bfda6ee-1": {
+            "type": "image",
+            "disabled": true,
+            "settings": {
+              "alignment": "center center",
+              "slide_title": "Image slide",
+              "subheading": "Tell your brand's story through images",
+              "button_label": "",
+              "button_link": ""
+            }
+          }
+        },
+        "block_order": [
+          "16400771792bfda6ee-0",
+          "16400771792bfda6ee-1"
+        ],
+        "settings": {
+          "slideshow_height": "adapt",
+          "text_size": "medium",
+          "text_alignment": "center center",
+          "show_overlay": true,
+          "autorotate": false,
+          "autorotate_speed": 5
+        }
+      }
+    },
+    "content_for_index": [
+      "16400771792bfda6ee"
+    ]
+  },
+  "presets": {
+    "Default": {}
+  }
+}

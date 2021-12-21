@@ -1,0 +1,38 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Skeleton theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Shopify",
+    "theme_documentation_url": "https:\/\/github.com\/Shopify\/skeleton-theme",
+    "theme_support_url": "https:\/\/github.com\/Shopify\/skeleton-theme\/issues"
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "ajax_cart_method",
+        "label": "Ajax Cart Type",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Drawer"
+          },
+          {
+            "value": "flip",
+            "label": "Flip"
+          },
+          {
+            "value": "modal",
+            "label": "Modal"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": "If your customer is logged-in, the country in his default shipping address will be selected. If you are not sure about the spelling to use above, refer to your first checkout page."
+      }
+    ]
+  }
+]
