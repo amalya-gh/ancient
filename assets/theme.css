@@ -8986,6 +8986,13 @@ hr {
 .product-recommendations__inner {
     padding: 35px 0;
 }
+.product-recommendations__title, .product-recommendations__subtitle{
+    text-align:center
+}
+.justify-evenly{
+    justify-content: space-evenly;
+    flex-wrap:wrap;
+}
 
 @media only screen and (min-width: 750px) {
     .product-recommendations__inner {
@@ -9648,4 +9655,10 @@ label[for="Quantity-product-template"] {
 }
 .js-qty{
     display: flex;
+}
+.product-template__container{
+    margin-bottom:60px;
+}
+.product{
+    margin-top: 20px;
 }
