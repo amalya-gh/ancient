@@ -157,7 +157,7 @@
   },
   "cart": {
     "general": {
-      "title": "Your cart",
+      "title": "Cart Items",
       "note": "Add a note to your order",
       "removed_item_html": "Removed <span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}<\/span> from your cart.",
       "remove": "Remove",
