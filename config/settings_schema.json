@@ -34,5 +34,26 @@
         "content": "If your customer is logged-in, the country in his default shipping address will be selected. If you are not sure about the spelling to use above, refer to your first checkout page."
       }
     ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product recommendation colors"
+      },
+      {
+        "type": "color",
+        "id": "color_heading",
+        "label": "Product recommendation title",
+        "default": "#3d4246"
+      },
+      {
+        "type": "color",
+        "id": "color_body",
+        "label": "Product recommendation subtitle",
+        "default": "#788188"
+      }
+    ]
   }
 ]
