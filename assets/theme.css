@@ -9662,3 +9662,19 @@ label[for="Quantity-product-template"] {
 .product{
     margin-top: 20px;
 }
+/* select arrow */
+.selector-wrapper_block{
+    position: relative;
+}
+
+.selector-wrapper_block svg{
+    position: absolute;
+    right: 0;
+    top: 60%;
+    transform: translate(-20px, 100%);
+}
+@media all and (max-width: 500px){
+    .cartview>a {
+        padding: 13px 9px!important;
+    }
+}
