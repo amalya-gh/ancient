@@ -35,8 +35,8 @@ theme.Sections = function Sections() {
 
 theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
   _createInstance: function(container, constructor) {
-    var id = container.getAttribute('data-section-id');
-    var type = container.getAttribute('data-section-type');
+    let id = container.getAttribute('data-section-id');
+    let type = container.getAttribute('data-section-type');
 
     constructor = constructor || this.constructors[type];
 
@@ -44,7 +44,7 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
       return;
     }
 
-    var instance = Object.assign(new constructor(container), {
+    let instance = Object.assign(new constructor(container), {
       id: id,
       type: type,
       container: container
@@ -54,7 +54,7 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
   },
 
   _onSectionLoad: function(evt) {
-    var container = document.querySelector(
+    let container = document.querySelector(
       '[data-section-id="' + evt.detail.sectionId + '"]'
     );
 
@@ -65,7 +65,7 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
 
   _onSectionUnload: function(evt) {
     this.instances = this.instances.filter(function(instance) {
-      var isEventInstance = instance.id === evt.detail.sectionId;
+      let isEventInstance = instance.id === evt.detail.sectionId;
 
       if (isEventInstance) {
         if (typeof instance.onUnload === 'function') {
@@ -79,7 +79,7 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
 
   _onSelect: function(evt) {
     // eslint-disable-next-line no-shadow
-    var instance = this.instances.find(function(instance) {
+    let instance = this.instances.find(function(instance) {
       return instance.id === evt.detail.sectionId;
     });
 
@@ -93,7 +93,7 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
 
   _onDeselect: function(evt) {
     // eslint-disable-next-line no-shadow
-    var instance = this.instances.find(function(instance) {
+    let instance = this.instances.find(function(instance) {
       return instance.id === evt.detail.sectionId;
     });
 
@@ -107,7 +107,7 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
 
   _onBlockSelect: function(evt) {
     // eslint-disable-next-line no-shadow
-    var instance = this.instances.find(function(instance) {
+    let instance = this.instances.find(function(instance) {
       return instance.id === evt.detail.sectionId;
     });
 
@@ -121,7 +121,7 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
 
   _onBlockDeselect: function(evt) {
     // eslint-disable-next-line no-shadow
-    var instance = this.instances.find(function(instance) {
+    let instance = this.instances.find(function(instance) {
       return instance.id === evt.detail.sectionId;
     });
 
@@ -164,26 +164,26 @@ slate.utils = {
    * getParameterByName('b') = "" (empty value)
    * getParameterByName('test') = null (absent)
    */
-  getParameterByName: function(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  },
+  // getParameterByName: function(name, url) {
+  //   if (!url) url = window.location.href;
+  //   name = name.replace(/[[\]]/g, '\\$&');
+  //   let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+  //     results = regex.exec(url);
+  //   if (!results) return null;
+  //   if (!results[2]) return '';
+  //   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  // },
 
   resizeSelects: function(selects) {
     selects.forEach(function(select) {
-      var arrowWidth = 55;
+      let arrowWidth = 55;
 
-      var test = document.createElement('span');
+      let test = document.createElement('span');
       test.innerHTML = select.selectedOptions[0].label;
 
       document.querySelector('.site-footer').appendChild(test);
 
-      var width = test.offsetWidth + arrowWidth;
+      let width = test.offsetWidth + arrowWidth;
       test.remove();
 
       select.style.width = width + 'px';
@@ -219,7 +219,7 @@ slate.rte = {
    */
   wrapTable: function(options) {
     options.tables.forEach(function(table) {
-      var wrapper = document.createElement('div');
+      let wrapper = document.createElement('div');
       wrapper.classList.add(options.tableWrapperClass);
 
       table.parentNode.insertBefore(wrapper, table);
@@ -236,7 +236,7 @@ slate.rte = {
    */
   wrapIframe: function(options) {
     options.iframes.forEach(function(iframe) {
-      var wrapper = document.createElement('div');
+      let wrapper = document.createElement('div');
       wrapper.classList.add(options.iframeWrapperClass);
 
       iframe.parentNode.insertBefore(wrapper, iframe);
@@ -273,7 +273,7 @@ slate.a11y = {
    */
   pageLinkFocus: function(element) {
     if (!element) return;
-    var focusClass = 'js-focus-hidden';
+    let focusClass = 'js-focus-hidden';
 
     element.setAttribute('tabIndex', '-1');
     element.focus();
@@ -294,13 +294,13 @@ slate.a11y = {
    * @param {HTMLElement} options.elementToFocus - Element to be focused when focus leaves container
    */
   trapFocus: function(options) {
-    var focusableElements = Array.from(
+    let focusableElements = Array.from(
       options.container.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex^="-"])'
       )
     ).filter(function(element) {
-      var width = element.offsetWidth;
-      var height = element.offsetHeight;
+      let width = element.offsetWidth;
+      let height = element.offsetHeight;
 
       return (
         width !== 0 &&
@@ -395,9 +395,9 @@ slate.a11y = {
    * @param {HTMLElement} options.links - Specific links to be targeted
    */
   accessibleLinks: function(options) {
-    var body = document.querySelector('body');
+    let body = document.querySelector('body');
 
-    var idSelectors = {
+    let idSelectors = {
       newWindow: 'a11y-new-window-message',
       external: 'a11y-external-message',
       newWindowExternal: 'a11y-new-window-external-message'
@@ -414,7 +414,7 @@ slate.a11y = {
         customMessages = {};
       }
 
-      var messages = Object.assign(
+      let messages = Object.assign(
         {
           newWindow: 'Opens in a new window.',
           external: 'Opens external website.',
@@ -423,10 +423,10 @@ slate.a11y = {
         customMessages
       );
 
-      var container = document.createElement('ul');
-      var htmlMessages = '';
+      let container = document.createElement('ul');
+      let htmlMessages = '';
 
-      for (var message in messages) {
+      for (let message in messages) {
         htmlMessages +=
           '<li id=' + idSelectors[message] + '>' + messages[message] + '</li>';
       }
@@ -438,16 +438,16 @@ slate.a11y = {
     }
 
     function _externalSite(link) {
-      var hostname = window.location.hostname;
+      let hostname = window.location.hostname;
 
       return link.hostname !== hostname;
     }
 
     options.links.forEach(function(link) {
-      var target = link.getAttribute('target');
-      var rel = link.getAttribute('rel');
-      var isExternal = _externalSite(link);
-      var isTargetBlank = target === '_blank';
+      let target = link.getAttribute('target');
+      let rel = link.getAttribute('rel');
+      let isExternal = _externalSite(link);
+      let isTargetBlank = target === '_blank';
 
       if (isExternal) {
         link.setAttribute('aria-describedby', idSelectors.external);
@@ -455,7 +455,7 @@ slate.a11y = {
 
       if (isTargetBlank) {
         if (!rel || rel.indexOf('noopener') === -1) {
-          var relValue = rel === undefined ? '' : rel + ' ';
+          let relValue = rel === undefined ? '' : rel + ' ';
           relValue = relValue + 'noopener';
           link.setAttribute('rel', relValue);
         }
@@ -492,8 +492,8 @@ theme.Images = (function() {
       images = [images];
     }
 
-    for (var i = 0; i < images.length; i++) {
-      var image = images[i];
+    for (let i = 0; i < images.length; i++) {
+      let image = images[i];
       this.loadImage(this.getSizedImageUrl(image, size));
     }
   }
@@ -513,8 +513,8 @@ theme.Images = (function() {
    * @param callback
    */
   function switchImage(image, element, callback) {
-    var size = this.imageSize(element.src);
-    var imageUrl = this.getSizedImageUrl(image.src, size);
+    let size = this.imageSize(element.src);
+    let imageUrl = this.getSizedImageUrl(image.src, size);
 
     if (callback) {
       callback(imageUrl, image, element); // eslint-disable-line callback-return
@@ -531,7 +531,7 @@ theme.Images = (function() {
    * @returns {null}
    */
   function imageSize(src) {
-    var match = src.match(
+    let match = src.match(
       /.+_((?:pico|icon|thumb|small|compact|medium|large|grande)|\d{1,4}x\d{0,4}|x\d{1,4})[_\\.@]/
     );
 
@@ -563,13 +563,13 @@ theme.Images = (function() {
       return this.removeProtocol(src);
     }
 
-    var match = src.match(
+    let match = src.match(
       /\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)(\?v=\d+)?$/i
     );
 
     if (match !== null) {
-      var prefix = src.split(match[0]);
-      var suffix = match[0];
+      let prefix = src.split(match[0]);
+      let suffix = match[0];
 
       return this.removeProtocol(prefix[0] + '_' + size + suffix);
     }
@@ -582,9 +582,7 @@ theme.Images = (function() {
   }
 
   return {
-    preload: preload,
     loadImage: loadImage,
-    switchImage: switchImage,
     imageSize: imageSize,
     getSizedImageUrl: getSizedImageUrl,
     removeProtocol: removeProtocol
@@ -605,15 +603,15 @@ theme.Images = (function() {
  */
 
 theme.Currency = (function() {
-  var moneyFormat = '${{amount}}'; // eslint-disable-line camelcase
+  let moneyFormat = '${{amount}}'; // eslint-disable-line camelcase
 
   function formatMoney(cents, format) {
     if (typeof cents === 'string') {
       cents = cents.replace('.', '');
     }
-    var value = '';
-    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
-    var formatString = format || moneyFormat;
+    let value = '';
+    let placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+    let formatString = format || moneyFormat;
 
     function formatWithDelimiters(number, precision, thousands, decimal) {
       thousands = thousands || ',';
@@ -625,12 +623,12 @@ theme.Currency = (function() {
 
       number = (number / 100.0).toFixed(precision);
 
-      var parts = number.split('.');
-      var dollarsAmount = parts[0].replace(
+      let parts = number.split('.');
+      let dollarsAmount = parts[0].replace(
         /(\d)(?=(\d\d\d)+(?!\d))/g,
         '$1' + thousands
       );
-      var centsAmount = parts[1] ? decimal + parts[1] : '';
+      let centsAmount = parts[1] ? decimal + parts[1] : '';
 
       return dollarsAmount + centsAmount;
     }
@@ -665,23 +663,23 @@ theme.Currency = (function() {
 })();
 
 /**
- * Variant Selection scripts
+ * letiant Selection scripts
  * ------------------------------------------------------------------------------
  *
- * Handles change events from the variant inputs in any `cart/add` forms that may
- * exist.  Also updates the master select and triggers updates when the variants
+ * Handles change events from the letiant inputs in any `cart/add` forms that may
+ * exist.  Also updates the master select and triggers updates when the letiants
  * price or image changes.
  *
- * @namespace variants
+ * @namespace letiants
  */
 
-slate.Variants = (function() {
+slate.letiants = (function() {
   /**
-   * Variant constructor
+   * letiant constructor
    *
    * @param {object} options - Settings from `product.js`
    */
-  function Variants(options) {
+  function letiants(options) {
     this.container = options.container;
     this.product = options.product;
     this.originalSelectorId = options.originalSelectorId;
@@ -689,7 +687,7 @@ slate.Variants = (function() {
     this.singleOptions = this.container.querySelectorAll(
       options.singleOptionSelector
     );
-    this.currentVariant = this._getVariantFromOptions();
+    this.currentletiant = this._getletiantFromOptions();
 
     this.singleOptions.forEach(
       function(option) {
@@ -698,19 +696,19 @@ slate.Variants = (function() {
     );
   }
 
-  Variants.prototype = Object.assign({}, Variants.prototype, {
+  letiants.prototype = Object.assign({}, letiants.prototype, {
     /**
      * Get the currently selected options from add-to-cart form. Works with all
      * form input elements.
      *
-     * @return {array} options - Values of currently selected variants
+     * @return {array} options - Values of currently selected letiants
      */
     _getCurrentOptions: function() {
-      var result = [];
+      let result = [];
 
       this.singleOptions.forEach(function(option) {
-        var type = option.getAttribute('type');
-        var isRadioOrCheckbox = type === 'radio' || type === 'checkbox';
+        let type = option.getAttribute('type');
+        let isRadioOrCheckbox = type === 'radio' || type === 'checkbox';
 
         if (!isRadioOrCheckbox || option.checked) {
           result.push({
@@ -724,18 +722,18 @@ slate.Variants = (function() {
     },
 
     /**
-     * Find variant based on selected values.
+     * Find letiant based on selected values.
      *
-     * @param  {array} selectedValues - Values of variant inputs
-     * @return {object || undefined} found - Variant object from product.variants
+     * @param  {array} selectedValues - Values of letiant inputs
+     * @return {object || undefined} found - letiant object from product.letiants
      */
-    _getVariantFromOptions: function() {
-      var selectedValues = this._getCurrentOptions();
-      var variants = this.product.variants;
+    _getletiantFromOptions: function() {
+      let selectedValues = this._getCurrentOptions();
+      let letiants = this.product.letiants;
 
-      var found = variants.find(function(variant) {
+      let found = letiants.find(function(letiant) {
         return selectedValues.every(function(values) {
-          return variant[values.index] === values.value;
+          return letiant[values.index] === values.value;
         });
       });
 
@@ -743,57 +741,57 @@ slate.Variants = (function() {
     },
 
     /**
-     * Event handler for when a variant input changes.
+     * Event handler for when a letiant input changes.
      */
     _onSelectChange: function() {
-      var variant = this._getVariantFromOptions();
+      let letiant = this._getletiantFromOptions();
 
       this.container.dispatchEvent(
-        new CustomEvent('variantChange', {
+        new CustomEvent('letiantChange', {
           detail: {
-            variant: variant
+            letiant: letiant
           },
           bubbles: true,
           cancelable: true
         })
       );
 
-      if (!variant) {
+      if (!letiant) {
         return;
       }
 
-      this._updateMasterSelect(variant);
-      this._updateImages(variant);
-      this._updatePrice(variant);
-      this._updateSKU(variant);
-      this.currentVariant = variant;
+      this._updateMasterSelect(letiant);
+      this._updateImages(letiant);
+      this._updatePrice(letiant);
+      this._updateSKU(letiant);
+      this.currentletiant = letiant;
 
       if (this.enableHistoryState) {
-        this._updateHistoryState(variant);
+        this._updateHistoryState(letiant);
       }
     },
 
     /**
-     * Trigger event when variant image changes
+     * Trigger event when letiant image changes
      *
-     * @param  {object} variant - Currently selected variant
-     * @return {event}  variantImageChange
+     * @param  {object} letiant - Currently selected letiant
+     * @return {event}  letiantImageChange
      */
-    _updateImages: function(variant) {
-      var variantImage = variant.featured_image || {};
-      var currentVariantImage = this.currentVariant.featured_image || {};
+    _updateImages: function(letiant) {
+      let letiantImage = letiant.featured_image || {};
+      let currentletiantImage = this.currentletiant.featured_image || {};
 
       if (
-        !variant.featured_image ||
-        variantImage.src === currentVariantImage.src
+        !letiant.featured_image ||
+        letiantImage.src === currentletiantImage.src
       ) {
         return;
       }
 
       this.container.dispatchEvent(
-        new CustomEvent('variantImageChange', {
+        new CustomEvent('letiantImageChange', {
           detail: {
-            variant: variant
+            letiant: letiant
           },
           bubbles: true,
           cancelable: true
@@ -802,24 +800,24 @@ slate.Variants = (function() {
     },
 
     /**
-     * Trigger event when variant price changes.
+     * Trigger event when letiant price changes.
      *
-     * @param  {object} variant - Currently selected variant
-     * @return {event} variantPriceChange
+     * @param  {object} letiant - Currently selected letiant
+     * @return {event} letiantPriceChange
      */
-    _updatePrice: function(variant) {
+    _updatePrice: function(letiant) {
       if (
-        variant.price === this.currentVariant.price &&
-        variant.compare_at_price === this.currentVariant.compare_at_price &&
-        variant.unit_price === this.currentVariant.unit_price
+        letiant.price === this.currentletiant.price &&
+        letiant.compare_at_price === this.currentletiant.compare_at_price &&
+        letiant.unit_price === this.currentletiant.unit_price
       ) {
         return;
       }
 
       this.container.dispatchEvent(
-        new CustomEvent('variantPriceChange', {
+        new CustomEvent('letiantPriceChange', {
           detail: {
-            variant: variant
+            letiant: letiant
           },
           bubbles: true,
           cancelable: true
@@ -828,20 +826,20 @@ slate.Variants = (function() {
     },
 
     /**
-     * Trigger event when variant sku changes.
+     * Trigger event when letiant sku changes.
      *
-     * @param  {object} variant - Currently selected variant
-     * @return {event} variantSKUChange
+     * @param  {object} letiant - Currently selected letiant
+     * @return {event} letiantSKUChange
      */
-    _updateSKU: function(variant) {
-      if (variant.sku === this.currentVariant.sku) {
+    _updateSKU: function(letiant) {
+      if (letiant.sku === this.currentletiant.sku) {
         return;
       }
 
       this.container.dispatchEvent(
-        new CustomEvent('variantSKUChange', {
+        new CustomEvent('letiantSKUChange', {
           detail: {
-            variant: variant
+            letiant: letiant
           },
           bubbles: true,
           cancelable: true
@@ -852,38 +850,38 @@ slate.Variants = (function() {
     /**
      * Update history state for product deeplinking
      *
-     * @param  {variant} variant - Currently selected variant
+     * @param  {letiant} letiant - Currently selected letiant
      * @return {k}         [description]
      */
-    _updateHistoryState: function(variant) {
-      if (!history.replaceState || !variant) {
+    _updateHistoryState: function(letiant) {
+      if (!history.replaceState || !letiant) {
         return;
       }
 
-      var newurl =
+      let newurl =
         window.location.protocol +
         '//' +
         window.location.host +
         window.location.pathname +
-        '?variant=' +
-        variant.id;
+        '?letiant=' +
+        letiant.id;
       window.history.replaceState({ path: newurl }, '', newurl);
     },
 
     /**
-     * Update hidden master select of variant change
+     * Update hidden master select of letiant change
      *
-     * @param  {variant} variant - Currently selected variant
+     * @param  {letiant} letiant - Currently selected letiant
      */
-    _updateMasterSelect: function(variant) {
-      var masterSelect = this.container.querySelector(this.originalSelectorId);
+    _updateMasterSelect: function(letiant) {
+      let masterSelect = this.container.querySelector(this.originalSelectorId);
 
       if (!masterSelect) return;
-      masterSelect.value = variant.id;
+      masterSelect.value = letiant.id;
     }
   });
 
-  return Variants;
+  return letiants;
 })();
 
 this.Shopify = this.Shopify || {};
@@ -892,7 +890,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   'use strict';
 
   function validateQuery(query) {
-    var error;
+    let error;
 
     if (query === null || query === undefined) {
       error = new TypeError("'query' is missing");
@@ -908,7 +906,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function GenericError() {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = 'Server error';
     error.message = 'Something went wrong on the server';
@@ -918,7 +916,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function NotFoundError(status) {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = 'Not found';
     error.message = 'Not found';
@@ -928,7 +926,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function ServerError() {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = 'Server error';
     error.message = 'Something went wrong on the server';
@@ -938,7 +936,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function ContentTypeError(status) {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = 'Content-Type error';
     error.message = 'Content-Type was not provided or is of wrong type';
@@ -948,7 +946,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function JsonParseError(status) {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = 'JSON parse error';
     error.message = 'JSON syntax error';
@@ -958,7 +956,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function ThrottledError(status, name, message, retryAfter) {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = name;
     error.message = message;
@@ -969,7 +967,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function InvalidParameterError(status, name, message) {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = name;
     error.message = message;
@@ -979,7 +977,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function ExpectationFailedError(status, name, message) {
-    var error = Error.call(this);
+    let error = Error.call(this);
 
     error.name = name;
     error.message = message;
@@ -989,15 +987,15 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function request(searchUrl, queryParams, query, onSuccess, onError) {
-    var xhr = new XMLHttpRequest();
-    var route = searchUrl + '/suggest.json';
+    let xhr = new XMLHttpRequest();
+    let route = searchUrl + '/suggest.json';
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState !== XMLHttpRequest.DONE) {
         return;
       }
 
-      var contentType = xhr.getResponseHeader('Content-Type');
+      let contentType = xhr.getResponseHeader('Content-Type');
 
       if (xhr.status >= 500) {
         onError(new ServerError());
@@ -1022,7 +1020,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
 
       if (xhr.status === 417) {
         try {
-          var invalidParameterJson = JSON.parse(xhr.responseText);
+          let invalidParameterJson = JSON.parse(xhr.responseText);
 
           onError(
             new InvalidParameterError(
@@ -1040,7 +1038,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
 
       if (xhr.status === 422) {
         try {
-          var expectationFailedJson = JSON.parse(xhr.responseText);
+          let expectationFailedJson = JSON.parse(xhr.responseText);
 
           onError(
             new ExpectationFailedError(
@@ -1058,7 +1056,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
 
       if (xhr.status === 429) {
         try {
-          var throttledJson = JSON.parse(xhr.responseText);
+          let throttledJson = JSON.parse(xhr.responseText);
 
           onError(
             new ThrottledError(
@@ -1077,7 +1075,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
 
       if (xhr.status === 200) {
         try {
-          var res = JSON.parse(xhr.responseText);
+          let res = JSON.parse(xhr.responseText);
           res.query = query;
           onSuccess(res);
         } catch (error) {
@@ -1088,7 +1086,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
       }
 
       try {
-        var genericErrorJson = JSON.parse(xhr.responseText);
+        let genericErrorJson = JSON.parse(xhr.responseText);
         onError(
           new GenericError(
             xhr.status,
@@ -1125,7 +1123,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
 
   Cache.prototype.set = function(key, value) {
     if (this.count() >= this.bucketSize) {
-      var deleteKey = this._keys.splice(0, 1);
+      let deleteKey = this._keys.splice(0, 1);
       this.delete(deleteKey);
     }
 
@@ -1148,7 +1146,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   };
 
   Cache.prototype.delete = function(key) {
-    var exists = Boolean(this._store[key]);
+    let exists = Boolean(this._store[key]);
     delete this._store[key];
     return exists && !this._store[key];
   };
@@ -1158,7 +1156,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   Dispatcher.prototype.on = function(eventName, callback) {
-    var event = this.events[eventName];
+    let event = this.events[eventName];
     if (!event) {
       event = new DispatcherEvent(eventName);
       this.events[eventName] = event;
@@ -1167,7 +1165,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   };
 
   Dispatcher.prototype.off = function(eventName, callback) {
-    var event = this.events[eventName];
+    let event = this.events[eventName];
     if (event && event.callbacks.indexOf(callback) > -1) {
       event.unregisterCallback(callback);
       if (event.callbacks.length === 0) {
@@ -1177,7 +1175,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
   };
 
   Dispatcher.prototype.dispatch = function(eventName, payload) {
-    var event = this.events[eventName];
+    let event = this.events[eventName];
     if (event) {
       event.fire(payload);
     }
@@ -1193,24 +1191,24 @@ this.Shopify.theme.PredictiveSearch = (function() {
   };
 
   DispatcherEvent.prototype.unregisterCallback = function(callback) {
-    var index = this.callbacks.indexOf(callback);
+    let index = this.callbacks.indexOf(callback);
     if (index > -1) {
       this.callbacks.splice(index, 1);
     }
   };
 
   DispatcherEvent.prototype.fire = function(payload) {
-    var callbacks = this.callbacks.slice(0);
+    let callbacks = this.callbacks.slice(0);
     callbacks.forEach(function(callback) {
       callback(payload);
     });
   };
 
   function debounce(func, wait) {
-    var timeout = null;
+    let timeout = null;
     return function() {
-      var context = this;
-      var args = arguments;
+      let context = this;
+      let args = arguments;
       clearTimeout(timeout);
       timeout = setTimeout(function() {
         timeout = null;
@@ -1220,11 +1218,11 @@ this.Shopify.theme.PredictiveSearch = (function() {
   }
 
   function objectToQueryParams(obj, parentKey) {
-    var output = '';
+    let output = '';
     parentKey = parentKey || null;
 
     Object.keys(obj).forEach(function(key) {
-      var outputKey = key + '=';
+      let outputKey = key + '=';
       if (parentKey) {
         outputKey = parentKey + '[' + key + ']';
       }
@@ -1255,8 +1253,8 @@ this.Shopify.theme.PredictiveSearch = (function() {
       .toLowerCase();
   }
 
-  var DEBOUNCE_RATE = 10;
-  var requestDebounced = debounce(request, DEBOUNCE_RATE);
+  let DEBOUNCE_RATE = 10;
+  let requestDebounced = debounce(request, DEBOUNCE_RATE);
 
   function PredictiveSearch(params, searchUrl) {
     if (!params) {
@@ -1286,9 +1284,9 @@ this.Shopify.theme.PredictiveSearch = (function() {
     PRODUCT_TYPE: 'product_type',
     TAG: 'tag',
     TITLE: 'title',
-    VARIANTS_BARCODE: 'variants.barcode',
-    VARIANTS_SKU: 'variants.sku',
-    VARIANTS_TITLE: 'variants.title',
+    letIANTS_BARCODE: 'letiants.barcode',
+    letIANTS_SKU: 'letiants.sku',
+    letIANTS_TITLE: 'letiants.title',
     VENDOR: 'vendor'
   };
 
@@ -1311,7 +1309,7 @@ this.Shopify.theme.PredictiveSearch = (function() {
     }
 
     this._currentQuery = normalizeQuery(query);
-    var cacheResult = this.cache.get(this._currentQuery);
+    let cacheResult = this.cache.get(this._currentQuery);
     if (cacheResult) {
       this.dispatcher.dispatch('success', cacheResult);
       return this;
@@ -1375,7 +1373,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
       ? PredictiveSearch['default']
       : PredictiveSearch;
 
-  var DEFAULT_PREDICTIVE_SEARCH_API_CONFIG = {
+  let DEFAULT_PREDICTIVE_SEARCH_API_CONFIG = {
     resources: {
       type: [PredictiveSearch.TYPES.PRODUCT],
       options: {
@@ -1384,7 +1382,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
           PredictiveSearch.FIELDS.TITLE,
           PredictiveSearch.FIELDS.VENDOR,
           PredictiveSearch.FIELDS.PRODUCT_TYPE,
-          PredictiveSearch.FIELDS.VARIANTS_TITLE
+          PredictiveSearch.FIELDS.letIANTS_TITLE
         ]
       }
     }
@@ -1406,7 +1404,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
       !config.loadingResultsMessageTemplateFct ||
       !isFunction(config.loadingResultsMessageTemplateFct)
     ) {
-      var error = new TypeError(
+      let error = new TypeError(
         'PredictiveSearchComponent config is not valid'
       );
       error.type = 'argument';
@@ -1443,8 +1441,8 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
 
     // Set classes
     this.classes = {
-      visibleVariant: config.visibleVariant
-        ? config.visibleVariant
+      visibleletiant: config.visibleletiant
+        ? config.visibleletiant
         : 'predictive-search-wrapper--visible',
       itemSelected: config.itemSelectedClass
         ? config.itemSelectedClass
@@ -1511,16 +1509,12 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   }
 
   function isValidNodes(nodes) {
-    if (
-      !nodes ||
+    return !(!nodes ||
       !nodes.input ||
       !nodes.result ||
-      nodes.input.tagName !== 'INPUT'
-    ) {
-      return false;
-    }
+      nodes.input.tagName !== 'INPUT');
 
-    return true;
+
   }
 
   function assignCallbacks(config) {
@@ -1554,13 +1548,13 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   }
 
   /**
-   * Public variables
+   * Public letiables
    */
   PredictiveSearchComponent.prototype.isResultVisible = false;
   PredictiveSearchComponent.prototype.results = {};
 
   /**
-   * "Private" variables
+   * "Private" letiables
    */
   PredictiveSearchComponent.prototype._latencyTimer = null;
   PredictiveSearchComponent.prototype._resultNodeClicked = false;
@@ -1569,8 +1563,8 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
    * "Private" instance methods
    */
   PredictiveSearchComponent.prototype._addInputEventListeners = function() {
-    var input = this.nodes.input;
-    var reset = this.nodes.reset;
+    let input = this.nodes.input;
+    let reset = this.nodes.reset;
 
     if (!input) {
       return;
@@ -1593,7 +1587,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   };
 
   PredictiveSearchComponent.prototype._removeInputEventListeners = function() {
-    var input = this.nodes.input;
+    let input = this.nodes.input;
 
     input.removeEventListener('focus', this._handleInputFocus);
     input.removeEventListener('blur', this._handleInputBlur);
@@ -1616,7 +1610,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   };
 
   PredictiveSearchComponent.prototype._removeClearButtonEventListener = function() {
-    var reset = this.nodes.reset;
+    let reset = this.nodes.reset;
 
     if (!reset) {
       return;
@@ -1639,7 +1633,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
         this._resultNodeClicked = true;
       } else {
         if (isFunction(this.callbacks.onBodyMousedown)) {
-          var returnedValue = this.callbacks.onBodyMousedown(this.nodes);
+          let returnedValue = this.callbacks.onBodyMousedown(this.nodes);
           if (isBoolean(returnedValue) && returnedValue) {
             this.close();
           }
@@ -1652,7 +1646,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
 
   PredictiveSearchComponent.prototype._handleInputFocus = function(evt) {
     if (isFunction(this.callbacks.onInputFocus)) {
-      var returnedValue = this.callbacks.onInputFocus(this.nodes);
+      let returnedValue = this.callbacks.onInputFocus(this.nodes);
       if (isBoolean(returnedValue) && !returnedValue) {
         return false;
       }
@@ -1672,7 +1666,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
     setTimeout(
       function() {
         if (isFunction(this.callbacks.onInputBlur)) {
-          var returnedValue = this.callbacks.onInputBlur(this.nodes);
+          let returnedValue = this.callbacks.onInputBlur(this.nodes);
           if (isBoolean(returnedValue) && !returnedValue) {
             return false;
           }
@@ -1743,8 +1737,8 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   PredictiveSearchComponent.prototype._announceNumberOfResultsFound = function(
     results
   ) {
-    var currentAnnouncedMessage = this._accessibilityAnnouncerDiv.innerHTML;
-    var newMessage = this.numberOfResultsTemplateFct(results);
+    let currentAnnouncedMessage = this._accessibilityAnnouncerDiv.innerHTML;
+    let newMessage = this.numberOfResultsTemplateFct(results);
 
     // If the messages are the same, they won't get announced
     // add white space so it gets announced
@@ -1760,13 +1754,13 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   };
 
   PredictiveSearchComponent.prototype._handleInputKeyup = function(evt) {
-    var UP_ARROW_KEY_CODE = 38;
-    var DOWN_ARROW_KEY_CODE = 40;
-    var RETURN_KEY_CODE = 13;
-    var ESCAPE_KEY_CODE = 27;
+    let UP_ARROW_KEY_CODE = 38;
+    let DOWN_ARROW_KEY_CODE = 40;
+    let RETURN_KEY_CODE = 13;
+    let ESCAPE_KEY_CODE = 27;
 
     if (isFunction(this.callbacks.onInputKeyup)) {
-      var returnedValue = this.callbacks.onInputKeyup(this.nodes);
+      let returnedValue = this.callbacks.onInputKeyup(this.nodes);
       if (isBoolean(returnedValue) && !returnedValue) {
         return false;
       }
@@ -1806,9 +1800,9 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   };
 
   PredictiveSearchComponent.prototype._handleInputKeydown = function(evt) {
-    var RETURN_KEY_CODE = 13;
-    var UP_ARROW_KEY_CODE = 38;
-    var DOWN_ARROW_KEY_CODE = 40;
+    let RETURN_KEY_CODE = 13;
+    let UP_ARROW_KEY_CODE = 38;
+    let DOWN_ARROW_KEY_CODE = 40;
 
     // Prevent the form default submission if there is a selected option
     if (evt.keyCode === RETURN_KEY_CODE && this._getSelectedOption() !== null) {
@@ -1828,7 +1822,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
     evt.preventDefault();
 
     if (isFunction(this.callbacks.onInputReset)) {
-      var returnedValue = this.callbacks.onInputReset(this.nodes);
+      let returnedValue = this.callbacks.onInputReset(this.nodes);
       if (isBoolean(returnedValue) && !returnedValue) {
         return false;
       }
@@ -1846,10 +1840,10 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
     evt,
     direction
   ) {
-    var currentOption = this._getSelectedOption();
+    let currentOption = this._getSelectedOption();
 
     if (!currentOption) {
-      var firstOption = this.nodes.result.querySelector(
+      let firstOption = this.nodes.result.querySelector(
         this.selectors.searchResult
       );
       firstOption.classList.add(this.classes.itemSelected);
@@ -1859,7 +1853,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
       );
     } else {
       if (direction === 'DOWN') {
-        var nextOption = currentOption.nextElementSibling;
+        let nextOption = currentOption.nextElementSibling;
         if (nextOption) {
           currentOption.classList.remove(this.classes.itemSelected);
           nextOption.classList.add(this.classes.itemSelected);
@@ -1869,7 +1863,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
           );
         }
       } else {
-        var previousOption = currentOption.previousElementSibling;
+        let previousOption = currentOption.previousElementSibling;
         if (previousOption) {
           currentOption.classList.remove(this.classes.itemSelected);
           previousOption.classList.add(this.classes.itemSelected);
@@ -1887,7 +1881,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   };
 
   PredictiveSearchComponent.prototype._selectOption = function() {
-    var selectedOption = this._getSelectedOption();
+    let selectedOption = this._getSelectedOption();
 
     if (selectedOption) {
       selectedOption.querySelector('a, button').click();
@@ -1895,7 +1889,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
   };
 
   PredictiveSearchComponent.prototype._search = function() {
-    var newSearchKeyword = this.nodes.input.value;
+    let newSearchKeyword = this.nodes.input.value;
 
     if (this._searchKeyword === newSearchKeyword) {
       return;
@@ -1909,7 +1903,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
         // Annonuce that we're loading the results
         this._announceLoadingState();
 
-        this.nodes.result.classList.add(this.classes.visibleVariant);
+        this.nodes.result.classList.add(this.classes.visibleletiant);
         // NOTE: We could benifit in using DOMPurify.
         // https://github.com/cure53/DOMPurify
         this.nodes.result.innerHTML = this.resultTemplateFct(this.results);
@@ -1956,7 +1950,7 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
 
   PredictiveSearchComponent.prototype._closeOnNoResults = function() {
     if (this.nodes) {
-      this.nodes.result.classList.remove(this.classes.visibleVariant);
+      this.nodes.result.classList.remove(this.classes.visibleletiant);
     }
 
     this.isResultVisible = false;
@@ -1987,13 +1981,13 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
     }
 
     if (isFunction(this.callbacks.onBeforeOpen)) {
-      var returnedValue = this.callbacks.onBeforeOpen(this.nodes);
+      let returnedValue = this.callbacks.onBeforeOpen(this.nodes);
       if (isBoolean(returnedValue) && !returnedValue) {
         return false;
       }
     }
 
-    this.nodes.result.classList.add(this.classes.visibleVariant);
+    this.nodes.result.classList.add(this.classes.visibleletiant);
     this.nodes.input.setAttribute('aria-expanded', true);
     this.isResultVisible = true;
 
@@ -2010,14 +2004,14 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
     }
 
     if (isFunction(this.callbacks.onBeforeClose)) {
-      var returnedValue = this.callbacks.onBeforeClose(this.nodes);
+      let returnedValue = this.callbacks.onBeforeClose(this.nodes);
       if (isBoolean(returnedValue) && !returnedValue) {
         return false;
       }
     }
 
     if (this.nodes) {
-      this.nodes.result.classList.remove(this.classes.visibleVariant);
+      this.nodes.result.classList.remove(this.classes.visibleletiant);
     }
 
     this.nodes.input.setAttribute('aria-expanded', false);
@@ -2038,13 +2032,13 @@ this.Shopify.theme.PredictiveSearchComponent = (function(PredictiveSearch) {
     this.close();
 
     if (isFunction(this.callbacks.onBeforeDestroy)) {
-      var returnedValue = this.callbacks.onBeforeDestroy(this.nodes);
+      let returnedValue = this.callbacks.onBeforeDestroy(this.nodes);
       if (isBoolean(returnedValue) && !returnedValue) {
         return false;
       }
     }
 
-    this.nodes.result.classList.remove(this.classes.visibleVariant);
+    this.nodes.result.classList.remove(this.classes.visibleletiant);
     removeInputAttributes(this.nodes.input);
     this._removeInputEventListeners();
     this._removeBodyEventListener();
@@ -2335,17 +2329,17 @@ theme.TouchEvents.prototype = Object.assign({}, theme.TouchEvents.prototype, {
 ==============================================================================*/
 theme.Drawers = (function() {
   function Drawer(id, position, options) {
-    var DEFAULT_OPEN_CLASS = 'js-drawer-open';
-    var DEFAULT_CLOSE_CLASS = 'js-drawer-close';
+    let DEFAULT_OPEN_CLASS = 'js-drawer-open';
+    let DEFAULT_CLOSE_CLASS = 'js-drawer-close';
 
-    var defaults = {
+    let defaults = {
       selectors: {
-        openVariant: '.' + DEFAULT_OPEN_CLASS + '-' + position,
+        openletiant: '.' + DEFAULT_OPEN_CLASS + '-' + position,
         close: '.' + DEFAULT_CLOSE_CLASS
       },
       classes: {
         open: DEFAULT_OPEN_CLASS,
-        openVariant: DEFAULT_OPEN_CLASS + '-' + position
+        openletiant: DEFAULT_OPEN_CLASS + '-' + position
       },
       withPredictiveSearch: false
     };
@@ -2371,7 +2365,7 @@ theme.Drawers = (function() {
 
   Drawer.prototype.init = function() {
     document
-      .querySelector(this.config.selectors.openVariant)
+      .querySelector(this.config.selectors.openletiant)
       .addEventListener('click', this.open.bind(this));
     this.drawer
       .querySelector(this.config.selectors.close)
@@ -2380,7 +2374,7 @@ theme.Drawers = (function() {
 
   Drawer.prototype.open = function(evt) {
     // Keep track if drawer was opened from a click, or called by another function
-    var externalCall = false;
+    let externalCall = false;
 
     // Prevent following href if link is clicked
     if (evt) {
@@ -2411,7 +2405,7 @@ theme.Drawers = (function() {
       function(parent) {
         parent.classList.add(
           this.config.classes.open,
-          this.config.classes.openVariant
+          this.config.classes.openletiant
         );
       }.bind(this)
     );
@@ -2433,7 +2427,7 @@ theme.Drawers = (function() {
     }
 
     // Set focus on drawer
-    var trapFocusConfig = {
+    let trapFocusConfig = {
       container: this.drawer
     };
 
@@ -2468,7 +2462,7 @@ theme.Drawers = (function() {
       function(parent) {
         parent.classList.remove(
           this.config.classes.open,
-          this.config.classes.openVariant
+          this.config.classes.openletiant
         );
       }.bind(this)
     );
@@ -2552,13 +2546,13 @@ theme.Drawers = (function() {
 })();
 
 theme.Helpers = (function() {
-  var touchDevice = false;
+  let touchDevice = false;
 
-  var classes = {
+  let classes = {
     preventScrolling: 'prevent-scrolling'
   };
 
-  var scrollPosition = window.pageYOffset;
+  let scrollPosition = window.pageYOffset;
 
   function setTouch() {
     touchDevice = true;
@@ -2581,18 +2575,18 @@ theme.Helpers = (function() {
   }
 
   function debounce(func, wait, immediate) {
-    var timeout;
+    let timeout;
 
     return function() {
-      var context = this,
+      let context = this,
         args = arguments;
 
-      var later = function() {
+      let later = function() {
         timeout = null;
         if (!immediate) func.apply(context, args);
       };
 
-      var callNow = immediate && !timeout;
+      let callNow = immediate && !timeout;
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
       if (callNow) func.apply(context, args);
@@ -2601,8 +2595,8 @@ theme.Helpers = (function() {
 
   function getScript(source, beforeEl) {
     return new Promise(function(resolve, reject) {
-      var script = document.createElement('script');
-      var prior = beforeEl || document.getElementsByTagName('script')[0];
+      let script = document.createElement('script');
+      let prior = beforeEl || document.getElementsByTagName('script')[0];
 
       script.async = true;
       script.defer = true;
@@ -2645,17 +2639,17 @@ theme.Helpers = (function() {
       { once: true }
     );
 
-    var properties = [
+    let properties = [
       'transition-duration',
       '-moz-transition-duration',
       '-webkit-transition-duration',
       '-o-transition-duration'
     ];
 
-    var duration = 0;
+    let duration = 0;
 
     properties.forEach(function(property) {
-      var computedValue = getComputedStyle(element)[property];
+      let computedValue = getComputedStyle(element)[property];
 
       if (computedValue) {
         computedValue.replace(/\D/g, '');
@@ -2676,7 +2670,7 @@ theme.Helpers = (function() {
    * @return {String}      The serialized form data
    */
   function serialize(form) {
-    var arr = [];
+    let arr = [];
     Array.prototype.slice.call(form.elements).forEach(function(field) {
       if (
         !field.name ||
@@ -2704,7 +2698,7 @@ theme.Helpers = (function() {
     return arr.join('&');
   }
   function cookiesEnabled() {
-    var cookieEnabled = navigator.cookieEnabled;
+    let cookieEnabled = navigator.cookieEnabled;
 
     if (!cookieEnabled) {
       document.cookie = 'testcookie';
@@ -2715,11 +2709,11 @@ theme.Helpers = (function() {
   }
 
   function promiseStylesheet(stylesheet) {
-    var stylesheetUrl = stylesheet || theme.stylesheet;
+    let stylesheetUrl = stylesheet || theme.stylesheet;
 
     if (typeof this.stylesheetPromise === 'undefined') {
       this.stylesheetPromise = new Promise(function(resolve) {
-        var link = document.querySelector('link[href="' + stylesheetUrl + '"]');
+        let link = document.querySelector('link[href="' + stylesheetUrl + '"]');
 
         if (link.loaded) resolve();
 
@@ -2747,19 +2741,19 @@ theme.Helpers = (function() {
 })();
 
 theme.LibraryLoader = (function() {
-  var types = {
+  let types = {
     link: 'link',
     script: 'script'
   };
 
-  var status = {
+  let status = {
     requested: 'requested',
     loaded: 'loaded'
   };
 
-  var cloudCdn = 'https://cdn.shopify.com/shopifycloud/';
+  let cloudCdn = 'https://cdn.shopify.com/shopifycloud/';
 
-  var libraries = {
+  let libraries = {
     plyrShopifyStyles: {
       tagId: 'plyr-shopify-styles',
       src: cloudCdn + 'plyr/v2.0/shopify-plyr.css',
@@ -2773,7 +2767,7 @@ theme.LibraryLoader = (function() {
   };
 
   function load(libraryName, callback) {
-    var library = libraries[libraryName];
+    let library = libraries[libraryName];
 
     if (!library) return;
     if (library.status === status.requested) return;
@@ -2786,7 +2780,7 @@ theme.LibraryLoader = (function() {
 
     library.status = status.requested;
 
-    var tag;
+    let tag;
 
     switch (library.type) {
       case types.script:
@@ -2800,12 +2794,12 @@ theme.LibraryLoader = (function() {
     tag.id = library.tagId;
     library.element = tag;
 
-    var firstScriptTag = document.getElementsByTagName(library.type)[0];
+    let firstScriptTag = document.getElementsByTagName(library.type)[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
 
   function createScriptTag(library, callback) {
-    var tag = document.createElement('script');
+    let tag = document.createElement('script');
     tag.src = library.src;
     tag.addEventListener('load', function() {
       library.status = status.loaded;
@@ -2815,7 +2809,7 @@ theme.LibraryLoader = (function() {
   }
 
   function createLinkTag(library, callback) {
-    var tag = document.createElement('link');
+    let tag = document.createElement('link');
     tag.href = library.src;
     tag.rel = 'stylesheet';
     tag.type = 'text/css';
@@ -2836,7 +2830,7 @@ theme.LibraryLoader = (function() {
 window.theme = window.theme || {};
 
 theme.Header = (function() {
-  var selectors = {
+  let selectors = {
     body: 'body',
     navigation: '#AccessibleNav',
     siteNavHasDropdown: '[data-has-dropdowns]',
@@ -2850,14 +2844,14 @@ theme.Header = (function() {
     siteHeader: '.site-header'
   };
 
-  var config = {
+  let config = {
     activeClass: 'site-nav--active-dropdown',
     childLinkClass: 'site-nav__child-link',
     rightDropdownClass: 'site-nav__dropdown--right',
     leftDropdownClass: 'site-nav__dropdown--left'
   };
 
-  var cache = {};
+  let cache = {};
 
   function init() {
     cacheSelectors();
@@ -2889,7 +2883,7 @@ theme.Header = (function() {
   }
 
   function cacheSelectors() {
-    var navigation = document.querySelector(selectors.navigation);
+    let navigation = document.querySelector(selectors.navigation);
 
     cache = {
       nav: navigation,
@@ -2937,7 +2931,7 @@ theme.Header = (function() {
 
   function styleDropdowns(dropdownListItems) {
     dropdownListItems.forEach(function(item) {
-      var dropdownLi = item.querySelector(selectors.siteNavDropdown);
+      let dropdownLi = item.querySelector(selectors.siteNavDropdown);
 
       if (!dropdownLi) return;
 
@@ -2952,11 +2946,11 @@ theme.Header = (function() {
   }
 
   function isRightOfLogo(item) {
-    var rect = item.getBoundingClientRect();
-    var win = item.ownerDocument.defaultView;
-    var leftOffset = rect.left + win.pageXOffset;
+    let rect = item.getBoundingClientRect();
+    let win = item.ownerDocument.defaultView;
+    let leftOffset = rect.left + win.pageXOffset;
 
-    var headerWidth = Math.floor(cache.siteHeader.offsetWidth) / 2;
+    let headerWidth = Math.floor(cache.siteHeader.offsetWidth) / 2;
     return leftOffset > headerWidth;
   }
 
@@ -2964,11 +2958,11 @@ theme.Header = (function() {
     document
       .querySelectorAll(selectors.siteNavHasCenteredDropdown)
       .forEach(function(el) {
-        var fullWidthDropdown = el.querySelector(
+        let fullWidthDropdown = el.querySelector(
           selectors.siteNavCenteredDropdown
         );
 
-        var fullWidthDropdownOffset = el.offsetTop + 41;
+        let fullWidthDropdownOffset = el.offsetTop + 41;
         fullWidthDropdown.style.top = fullWidthDropdownOffset + 'px';
       });
   }
@@ -2982,7 +2976,7 @@ theme.Header = (function() {
   }
 
   function submenuParentClickHandler(event) {
-    var element = event.currentTarget;
+    let element = event.currentTarget;
 
     element.classList.contains(config.activeClass)
       ? hideDropdown()
@@ -3002,7 +2996,7 @@ theme.Header = (function() {
     });
   }
 
-  var adjustStyleAndPosition = theme.Helpers.debounce(function() {
+  let adjustStyleAndPosition = theme.Helpers.debounce(function() {
     styleDropdowns(document.querySelectorAll(selectors.siteNavHasDropdown));
     positionFullWidthDropdowns();
   }, 50);
@@ -3038,7 +3032,7 @@ theme.Header = (function() {
 window.theme = window.theme || {};
 
 theme.MobileNav = (function() {
-  var classes = {
+  let classes = {
     mobileNavOpenIcon: 'mobile-nav--open',
     mobileNavCloseIcon: 'mobile-nav--close',
     navLinkWrapper: 'mobile-nav__item',
@@ -3053,13 +3047,13 @@ theme.MobileNav = (function() {
     subNavToggleBtn: 'js-toggle-submenu'
   };
 
-  var cache = {};
-  var isTransitioning;
-  var activeSubNav;
-  var activeTrigger;
-  var menuLevel = 1;
-  var mediumUpQuery = '(min-width: ' + theme.breakpoints.medium + 'px)';
-  var mql = window.matchMedia(mediumUpQuery);
+  let cache = {};
+  let isTransitioning;
+  let activeSubNav;
+  let activeTrigger;
+  let menuLevel = 1;
+  let mediumUpQuery = '(min-width: ' + theme.breakpoints.medium + 'px)';
+  let mql = window.matchMedia(mediumUpQuery);
 
   function init() {
     cacheSelectors();
@@ -3085,7 +3079,7 @@ theme.MobileNav = (function() {
   }
 
   function toggleMobileNav() {
-    var mobileNavIsOpen = cache.mobileNavToggle.classList.contains(
+    let mobileNavIsOpen = cache.mobileNavToggle.classList.contains(
       classes.mobileNavCloseIcon
     );
 
@@ -3109,7 +3103,7 @@ theme.MobileNav = (function() {
   }
 
   function openMobileNav() {
-    var translateHeaderHeight = cache.siteHeader.offsetHeight;
+    let translateHeaderHeight = cache.siteHeader.offsetHeight;
 
     theme.Helpers.prepareTransition(cache.mobileNavContainer);
     cache.mobileNavContainer.classList.add(classes.navOpen);
@@ -3173,13 +3167,13 @@ theme.MobileNav = (function() {
   function toggleSubNav(event) {
     if (isTransitioning) return;
 
-    var toggleBtn = event.currentTarget;
-    var isReturn = toggleBtn.classList.contains(classes.return);
+    let toggleBtn = event.currentTarget;
+    let isReturn = toggleBtn.classList.contains(classes.return);
 
     isTransitioning = true;
 
     if (isReturn) {
-      var subNavToggleBtn = document.querySelectorAll(
+      let subNavToggleBtn = document.querySelectorAll(
         '.' + classes.subNavToggleBtn + "[data-level='" + (menuLevel - 1) + "']"
       );
 
@@ -3200,7 +3194,7 @@ theme.MobileNav = (function() {
   }
 
   function goToSubnav(target) {
-    var targetMenu = target
+    let targetMenu = target
       ? document.querySelector(
           '.mobile-nav__dropdown[data-parent="' + target + '"]'
         )
@@ -3215,9 +3209,9 @@ theme.MobileNav = (function() {
 
     activeSubNav = targetMenu;
 
-    var translateMenuHeight = targetMenu.offsetHeight;
+    let translateMenuHeight = targetMenu.offsetHeight;
 
-    var openNavClass =
+    let openNavClass =
       menuLevel > 2 ? classes.thirdNavShowing : classes.subNavShowing;
 
     cache.mobileNavContainer.style.height = translateMenuHeight + 'px';
@@ -3232,7 +3226,7 @@ theme.MobileNav = (function() {
     }
 
     /* if going back to first subnav, focus is on whole header */
-    var container = menuLevel === 1 ? cache.sectionHeader : targetMenu;
+    let container = menuLevel === 1 ? cache.sectionHeader : targetMenu;
 
     cache.mobileNavContainer.addEventListener(
       'transitionend',
@@ -3273,7 +3267,7 @@ theme.MobileNav = (function() {
 
 window.Modals = (function() {
   function Modal(id, name, options) {
-    var defaults = {
+    let defaults = {
       close: '.js-modal-close',
       open: '.js-modal-open-' + name,
       openClass: 'modal--is-active',
@@ -3309,9 +3303,9 @@ window.Modals = (function() {
   };
 
   Modal.prototype.open = function(evt) {
-    var self = this;
+    let self = this;
     // Keep track if modal was opened from a click, or called by another function
-    var externalCall = false;
+    let externalCall = false;
 
     if (this.modalIsOpen) return;
 
@@ -3355,7 +3349,7 @@ window.Modals = (function() {
 
     this.modal.classList.remove(this.config.openClass);
 
-    var self = this;
+    let self = this;
 
     this.nodes.parents.forEach(function(node) {
       node.classList.remove(self.config.openClass);
@@ -3400,11 +3394,11 @@ window.Modals = (function() {
 })();
 
 (function() {
-  var selectors = {
+  let selectors = {
     backButton: '.return-link'
   };
 
-  var backButton = document.querySelector(selectors.backButton);
+  let backButton = document.querySelector(selectors.backButton);
 
   if (!document.referrer || !backButton || !window.history.length) {
     return;
@@ -3415,8 +3409,8 @@ window.Modals = (function() {
     function(evt) {
       evt.preventDefault();
 
-      var referrerDomain = urlDomain(document.referrer);
-      var shopDomain = urlDomain(window.location.href);
+      let referrerDomain = urlDomain(document.referrer);
+      let shopDomain = urlDomain(window.location.href);
 
       if (shopDomain === referrerDomain) {
         history.back();
@@ -3428,7 +3422,7 @@ window.Modals = (function() {
   );
 
   function urlDomain(url) {
-    var anchor = document.createElement('a');
+    let anchor = document.createElement('a');
     anchor.ref = url;
 
     return anchor.hostname;
@@ -3436,7 +3430,7 @@ window.Modals = (function() {
 })();
 
 theme.Slideshow = (function() {
-  var selectors = {
+  let selectors = {
     button: '[data-slider-button]',
     indicator: '[data-slider-indicator]',
     indicators: '[data-slider-indicators]',
@@ -3448,7 +3442,7 @@ theme.Slideshow = (function() {
     sliderContainer: '[data-slider-container]'
   };
 
-  var classes = {
+  let classes = {
     isPaused: 'slideshow__pause--is-paused',
     indicator: 'slider-indicators__item',
     indicatorActive: 'slick-active',
@@ -3457,7 +3451,7 @@ theme.Slideshow = (function() {
     slideClone: 'slick-cloned'
   };
 
-  var attributes = {
+  let attributes = {
     buttonNext: 'data-slider-button-next'
   };
 
@@ -3564,7 +3558,7 @@ theme.Slideshow = (function() {
 
       this.autoTimeOut = window.setTimeout(
         function() {
-          var nextSlideIndex = this._getNextSlideIndex('next');
+          let nextSlideIndex = this._getNextSlideIndex('next');
           this._setPosition(nextSlideIndex);
         }.bind(this),
         this.options.slideInterval
@@ -3771,7 +3765,7 @@ theme.Slideshow = (function() {
       // Set width according to the number of items to show in 1 slide
       // Set container width to accomodate all items
       this.slides.forEach(function(sliderItem, index) {
-        var sliderItemLink = sliderItem.querySelector(selectors.sliderItemLink);
+        let sliderItemLink = sliderItem.querySelector(selectors.sliderItemLink);
         sliderItem.style.width = this.sliderItemWidth + 'px';
         sliderItem.setAttribute('aria-hidden', true);
         sliderItem.setAttribute('tabindex', -1);
@@ -3814,7 +3808,7 @@ theme.Slideshow = (function() {
     _onTouchMove: function(event, direction, difference) {
       // Fix touch events cause unexpected behaviour
       // when the dragging motion goes beyond the theme editor preview.
-      var threshold = 80;
+      let threshold = 80;
       if (
         Shopify.designMode &&
         (event.clientX <= threshold ||
@@ -3838,11 +3832,11 @@ theme.Slideshow = (function() {
     },
 
     _onTouchEnd: function(event, direction, difference) {
-      var nextTranslateXPosition = 0;
+      let nextTranslateXPosition = 0;
 
       if (Object.keys(difference).length === 0) return;
 
-      var slideDirection = direction === 'left' ? 'next' : '';
+      let slideDirection = direction === 'left' ? 'next' : '';
 
       if (direction === 'left') {
         if (this._isNextTranslateXLast(this.touchStartPosition)) {
@@ -3885,8 +3879,8 @@ theme.Slideshow = (function() {
       // prevent multiple clicks
       if (event.detail > 1) return;
 
-      var button = event.currentTarget;
-      var nextButton = button.hasAttribute(attributes.buttonNext);
+      let button = event.currentTarget;
+      let nextButton = button.hasAttribute(attributes.buttonNext);
 
       if (
         this.options.type === 'slide' &&
@@ -3924,7 +3918,7 @@ theme.Slideshow = (function() {
 
       if (this.options.type === 'slide' && this.sliderTrack) {
         this.sliderTrack.style.transition = 'transform 500ms ease 0s';
-        var newPosition = index * this.slides[0].offsetWidth;
+        let newPosition = index * this.slides[0].offsetWidth;
 
         this.sliderTrack.style.transform = 'translateX(-' + newPosition + 'px)';
 
@@ -4038,26 +4032,26 @@ theme.Slideshow = (function() {
         this.slideIndex = this._getNextSlideIndex(direction);
         this._moveSlideshow(direction);
       } else {
-        var nextSlideIndex = this._getNextSlideIndex(direction);
+        let nextSlideIndex = this._getNextSlideIndex(direction);
         this._setPosition(nextSlideIndex);
       }
     },
 
     _moveSlideshow: function(direction) {
       this.direction = direction;
-      var valueXToMove = 0;
+      let valueXToMove = 0;
 
       // Get current position of translateX
-      var currentTranslateXPosition = this._getTranslateXPosition();
-      var currentActiveSlidesIndex = this._getActiveSlidesIndex();
+      let currentTranslateXPosition = this._getTranslateXPosition();
+      let currentActiveSlidesIndex = this._getActiveSlidesIndex();
 
       // In the future, we'll use ES6 deconstructure
       // Math.min(...currentActiveSlidesIndex);
-      var currentActiveSlidesMinIndex = Math.min.apply(
+      let currentActiveSlidesMinIndex = Math.min.apply(
         Math,
         currentActiveSlidesIndex
       );
-      var currentActiveSlidesMaxIndex = Math.max.apply(
+      let currentActiveSlidesMaxIndex = Math.max.apply(
         Math,
         currentActiveSlidesIndex
       );
@@ -4130,8 +4124,8 @@ theme.Slideshow = (function() {
      */
     _setupMultipleActiveSlide: function(minIndex, maxIndex) {
       this.slides.forEach(function(slide) {
-        var sliderIndex = Number(slide.getAttribute('data-slider-slide-index'));
-        var sliderItemLink = slide.querySelector(selectors.sliderItemLink);
+        let sliderIndex = Number(slide.getAttribute('data-slider-slide-index'));
+        let sliderItemLink = slide.querySelector(selectors.sliderItemLink);
 
         slide.setAttribute('aria-hidden', true);
         slide.classList.remove(this.options.slideActiveClass);
@@ -4152,11 +4146,11 @@ theme.Slideshow = (function() {
 
     _setActiveIndicator: function(index) {
       this.indicators.forEach(function(indicatorWrapper) {
-        var activeIndicator = indicatorWrapper.querySelector(
+        let activeIndicator = indicatorWrapper.querySelector(
           '.' + classes.indicatorActive
         );
 
-        var nextIndicator = indicatorWrapper.childNodes[index];
+        let nextIndicator = indicatorWrapper.childNodes[index];
 
         if (activeIndicator) {
           activeIndicator.setAttribute('aria-selected', false);
@@ -4171,7 +4165,7 @@ theme.Slideshow = (function() {
     },
 
     setSlideshowHeight: function() {
-      var minAspectRatio = this.sliderContainer.getAttribute(
+      let minAspectRatio = this.sliderContainer.getAttribute(
         'data-min-aspect-ratio'
       );
       this.sliderContainer.style.height =
@@ -4186,7 +4180,7 @@ theme.Slideshow = (function() {
      * @param {String} direction "next" as a String, other empty string is previous slide
      */
     _getNextSlideIndex: function(direction) {
-      var counter = direction === 'next' ? 1 : -1;
+      let counter = direction === 'next' ? 1 : -1;
 
       if (direction === 'next') {
         if (this.slideIndex === this.lastSlide) {
@@ -4204,12 +4198,12 @@ theme.Slideshow = (function() {
      * This will return an array containing their indexes
      */
     _getActiveSlidesIndex: function() {
-      var currentActiveSlides = this.slides.filter(function(sliderItem) {
+      let currentActiveSlides = this.slides.filter(function(sliderItem) {
         if (sliderItem.classList.contains(this.options.slideActiveClass)) {
           return sliderItem;
         }
       }, this);
-      var currentActiveSlidesIndex = currentActiveSlides.map(function(
+      let currentActiveSlidesIndex = currentActiveSlides.map(function(
         sliderItem
       ) {
         return Number(sliderItem.getAttribute('data-slider-slide-index'));
@@ -4226,8 +4220,8 @@ theme.Slideshow = (function() {
     _disableArrows: function() {
       if (this.buttons.length === 0) return;
 
-      var previousButton = this.buttons[0];
-      var nextButton = this.buttons[1];
+      let previousButton = this.buttons[0];
+      let nextButton = this.buttons[1];
 
       // first slide
       if (this.isFirstSlide) {
@@ -4250,18 +4244,10 @@ theme.Slideshow = (function() {
      */
     _verifyFirstLastSlideTranslateX: function(translateXValue) {
       // first slide
-      if (this._isNextTranslateXFirst(translateXValue)) {
-        this.isFirstSlide = true;
-      } else {
-        this.isFirstSlide = false;
-      }
+      this.isFirstSlide = this._isNextTranslateXFirst(translateXValue);
 
       // last slide
-      if (this._isNextTranslateXLast(translateXValue)) {
-        this.isLastSlide = true;
-      } else {
-        this.isLastSlide = false;
-      }
+      this.isLastSlide = this._isNextTranslateXLast(translateXValue);
     },
 
     _getTranslateXPosition: function() {
@@ -4274,8 +4260,8 @@ theme.Slideshow = (function() {
 
     _isNextTranslateXLast: function(translateXValue) {
       // because translateX values are using negative, I'm converting into positive value
-      var translateXValueAbsolute = Math.abs(translateXValue);
-      var nextTranslateXValue =
+      let translateXValueAbsolute = Math.abs(translateXValue);
+      let nextTranslateXValue =
         translateXValueAbsolute + this.sliderTranslateXMove;
 
       return nextTranslateXValue >= this.sliderItemWidthTotal;
@@ -4296,16 +4282,16 @@ theme.Slideshow = (function() {
 })();
 
 theme.Video = (function() {
-  var autoplayCheckComplete = false;
-  var playOnClickChecked = false;
-  var playOnClick = false;
-  var youtubeLoaded = false;
-  var videos = {};
-  var videoPlayers = [];
-  var videoOptions = {
+  let autoplayCheckComplete = false;
+  let playOnClickChecked = false;
+  let playOnClick = false;
+  let youtubeLoaded = false;
+  let videos = {};
+  let videoPlayers = [];
+  let videoOptions = {
     ratio: 16 / 9,
     scrollAnimationDuration: 400,
-    playerVars: {
+    playerlets: {
       // eslint-disable-next-line camelcase
       iv_load_policy: 3,
       modestbranding: 1,
@@ -4321,7 +4307,7 @@ theme.Video = (function() {
       onStateChange: onPlayerChange
     }
   };
-  var classes = {
+  let classes = {
     playing: 'video-is-playing',
     paused: 'video-is-paused',
     loading: 'video-is-loading',
@@ -4335,7 +4321,7 @@ theme.Video = (function() {
     wrapperMinHeight: 'video-section-wrapper--min-height'
   };
 
-  var selectors = {
+  let selectors = {
     section: '.video-section',
     videoWrapper: '.video-section-wrapper',
     playVideoBtn: '.video-control__play',
@@ -4366,9 +4352,9 @@ theme.Video = (function() {
 
     if (!youtubeLoaded) {
       // This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
+      let tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
-      var firstScriptTag = document.getElementsByTagName('script')[0];
+      let firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
 
@@ -4396,7 +4382,7 @@ theme.Video = (function() {
   }
 
   function loadVideos() {
-    for (var key in videos) {
+    for (let key in videos) {
       if (videos.hasOwnProperty(key)) {
         createPlayer(key);
       }
@@ -4420,9 +4406,9 @@ theme.Video = (function() {
    */
 
   function privatePlayVideo(id, clicked) {
-    var videoData = videos[id];
-    var player = videoPlayers[id];
-    var videoWrapper = videoData.videoWrapper;
+    let videoData = videos[id];
+    let player = videoPlayers[id];
+    let videoWrapper = videoData.videoWrapper;
 
     if (playOnClick) {
       // playOnClick means we are probably on mobile (no autoplay).
@@ -4434,14 +4420,13 @@ theme.Video = (function() {
       videoWrapper.classList.remove(classes.loading);
       setAsPlaying(videoData);
       player.playVideo();
-      return;
     } else {
       player.playVideo();
     }
   }
 
   function setAutoplaySupport(supported) {
-    var supportClass = supported
+    let supportClass = supported
       ? classes.supportsAutoplay
       : classes.supportsNoAutoplay;
     document.documentElement.classList.remove(
@@ -4477,8 +4462,8 @@ theme.Video = (function() {
   // The API will call this function when each video player is ready
   function onPlayerReady(evt) {
     evt.target.setPlaybackQuality('hd1080');
-    var videoData = getVideoOptions(evt);
-    var videoTitle = evt.target.getVideoData().title;
+    let videoData = getVideoOptions(evt);
+    let videoTitle = evt.target.getVideoData().title;
     playOnClickCheck();
 
     // Prevent tabbing through YouTube player controls until visible
@@ -4497,7 +4482,7 @@ theme.Video = (function() {
   }
 
   function onPlayerChange(evt) {
-    var videoData = getVideoOptions(evt);
+    let videoData = getVideoOptions(evt);
     if (
       videoData.status === 'background' &&
       !isMobile() &&
@@ -4539,8 +4524,8 @@ theme.Video = (function() {
   }
 
   function setAsPlaying(videoData) {
-    var videoWrapper = videoData.videoWrapper;
-    var pauseButton = videoWrapper.querySelector(selectors.pauseVideoBtn);
+    let videoWrapper = videoData.videoWrapper;
+    let pauseButton = videoWrapper.querySelector(selectors.pauseVideoBtn);
 
     videoWrapper.classList.remove(classes.loading);
 
@@ -4568,7 +4553,7 @@ theme.Video = (function() {
   }
 
   function setAsPaused(videoData) {
-    var videoWrapper = videoData.videoWrapper;
+    let videoWrapper = videoData.videoWrapper;
 
     // YT's events fire after our click event. This status flag ensures
     // we don't interact with a closed or background video.
@@ -4584,8 +4569,8 @@ theme.Video = (function() {
   }
 
   function closeVideo(playerId) {
-    var videoData = videos[playerId];
-    var videoWrapper = videoData.videoWrapper;
+    let videoData = videos[playerId];
+    let videoWrapper = videoData.videoWrapper;
 
     document.getElementById(videoData.id).setAttribute('tabindex', '-1');
 
@@ -4606,17 +4591,17 @@ theme.Video = (function() {
   }
 
   function getVideoOptions(evt) {
-    var id = evt.target.getIframe().id;
+    let id = evt.target.getIframe().id;
     return videos[id];
   }
 
   function toggleExpandVideo(playerId, expand) {
-    var video = videos[playerId];
-    var elementTop =
+    let video = videos[playerId];
+    let elementTop =
       video.videoWrapper.getBoundingClientRect().top + window.pageYOffset;
-    var playButton = video.videoWrapper.querySelector(selectors.playVideoBtn);
-    var offset = 0;
-    var newHeight = 0;
+    let playButton = video.videoWrapper.querySelector(selectors.playVideoBtn);
+    let offset = 0;
+    let newHeight = 0;
 
     if (isMobile()) {
       video.videoWrapper.parentElement.classList.toggle('page-width', !expand);
@@ -4637,7 +4622,7 @@ theme.Video = (function() {
 
       // Animate doesn't work in mobile editor, so we don't use it
       if (!(isMobile() && Shopify.designMode)) {
-        var scrollBehavior = document.documentElement.style.scrollBehavior;
+        let scrollBehavior = document.documentElement.style.scrollBehavior;
         document.documentElement.style.scrollBehavior = 'smooth';
         window.scrollTo({ top: elementTop - offset });
         document.documentElement.style.scrollBehavior = scrollBehavior;
@@ -4655,18 +4640,18 @@ theme.Video = (function() {
         video.videoWrapper.classList.add(classes.wrapperMinHeight);
       }, 600);
       // Set focus on play button, but don't scroll page
-      var x = window.scrollX;
-      var y = window.scrollY;
+      let x = window.scrollX;
+      let y = window.scrollY;
       playButton.focus();
       window.scrollTo(x, y);
     }
   }
 
   function togglePause(playerId) {
-    var pauseButton = videos[playerId].videoWrapper.querySelector(
+    let pauseButton = videos[playerId].videoWrapper.querySelector(
       selectors.pauseVideoBtn
     );
-    var paused = pauseButton.classList.contains(classes.userPaused);
+    let paused = pauseButton.classList.contains(classes.userPaused);
     if (paused) {
       pauseButton.classList.remove(classes.userPaused);
       customPlayVideo(playerId);
@@ -4678,7 +4663,7 @@ theme.Video = (function() {
   }
 
   function startVideoOnClick(playerId) {
-    var video = videos[playerId];
+    let video = videos[playerId];
 
     // add loading class to wrapper
     video.videoWrapper.classList.add(classes.loading);
@@ -4705,8 +4690,8 @@ theme.Video = (function() {
     document.addEventListener('keydown', handleVideoPlayerKeydown);
   }
 
-  var handleVideoPlayerKeydown = function(evt) {
-    var playerId = document.activeElement.dataset.controls;
+  let handleVideoPlayerKeydown = function(evt) {
+    let playerId = document.activeElement.dataset.controls;
     if (evt.keyCode !== slate.utils.keyboardKeys.ESCAPE || !playerId) {
       return;
     }
@@ -4716,7 +4701,7 @@ theme.Video = (function() {
   };
 
   function sizeBackgroundVideos() {
-    var backgroundVideos = document.querySelectorAll(
+    let backgroundVideos = document.querySelectorAll(
       '.' + classes.backgroundVideo
     );
     backgroundVideos.forEach(function(el) {
@@ -4732,15 +4717,15 @@ theme.Video = (function() {
     if (isMobile()) {
       videoPlayer.style.cssText = null;
     } else {
-      var videoWrapper = videoPlayer.closest(selectors.videoWrapper);
-      var videoWidth = videoWrapper.clientWidth;
-      var playerWidth = videoPlayer.clientWidth;
-      var desktopHeight = videoWrapper.dataset.desktopHeight;
+      let videoWrapper = videoPlayer.closest(selectors.videoWrapper);
+      let videoWidth = videoWrapper.clientWidth;
+      let playerWidth = videoPlayer.clientWidth;
+      let desktopHeight = videoWrapper.dataset.desktopHeight;
 
       // when screen aspect ratio differs from video, video must center and underlay one dimension
       if (videoWidth / videoOptions.ratio < desktopHeight) {
         playerWidth = Math.ceil(desktopHeight * videoOptions.ratio); // get new player width
-        var styles =
+        let styles =
           'width: ' +
           playerWidth +
           'px; height: ' +
@@ -4752,7 +4737,7 @@ theme.Video = (function() {
       } else {
         // new video width < window width (gap to right)
         desktopHeight = Math.ceil(videoWidth / videoOptions.ratio); // get new player height
-        var styles2 =
+        let styles2 =
           'width: ' +
           videoWidth +
           'px; height: ' +
@@ -4770,7 +4755,7 @@ theme.Video = (function() {
 
   function unsetBackgroundVideo(playerId) {
     // Switch the background video to a chrome-only player once played
-    var player = document.getElementById(playerId);
+    let player = document.getElementById(playerId);
     player.classList.remove(classes.backgroundVideo);
     player.classList.add(classes.videoWithImage);
 
@@ -4787,7 +4772,7 @@ theme.Video = (function() {
   }
 
   function setBackgroundVideo(playerId) {
-    var player = document.getElementById(playerId);
+    let player = document.getElementById(playerId);
     player.classList.remove(classes.videoWithImage);
     player.classList.add(classes.backgroundVideo);
 
@@ -4801,10 +4786,10 @@ theme.Video = (function() {
     return window.innerWidth < theme.breakpoints.medium;
   }
 
-  var handleWindowResize = theme.Helpers.debounce(function() {
+  let handleWindowResize = theme.Helpers.debounce(function() {
     if (!youtubeLoaded) return;
-    var key;
-    var fullscreen = window.innerHeight === screen.height;
+    let key;
+    let fullscreen = window.innerHeight === screen.height;
     sizeBackgroundVideos();
 
     if (isMobile()) {
@@ -4824,7 +4809,7 @@ theme.Video = (function() {
     } else {
       setAutoplaySupport(true);
       for (key in videos) {
-        var videosWithImage = videos[key].videoWrapper.querySelectorAll(
+        let videosWithImage = videos[key].videoWrapper.querySelectorAll(
           '.' + classes.videoWithImage
         );
         if (videosWithImage.length) {
@@ -4836,13 +4821,13 @@ theme.Video = (function() {
     }
   }, 200);
 
-  var handleWindowScroll = theme.Helpers.debounce(function() {
+  let handleWindowScroll = theme.Helpers.debounce(function() {
     if (!youtubeLoaded) return;
 
-    for (var key in videos) {
+    for (let key in videos) {
       if (videos.hasOwnProperty(key)) {
-        var videoWrapper = videos[key].videoWrapper;
-        var condition =
+        let videoWrapper = videos[key].videoWrapper;
+        let condition =
           videoWrapper.getBoundingClientRect().top +
             window.pageYOffset +
             videoWrapper.offsetHeight * 0.75 <
@@ -4863,20 +4848,20 @@ theme.Video = (function() {
   }, 50);
 
   function initEvents() {
-    var playVideoBtns = document.querySelectorAll(selectors.playVideoBtn);
-    var closeVideoBtns = document.querySelectorAll(selectors.closeVideoBtn);
-    var pauseVideoBtns = document.querySelectorAll(selectors.pauseVideoBtn);
+    let playVideoBtns = document.querySelectorAll(selectors.playVideoBtn);
+    let closeVideoBtns = document.querySelectorAll(selectors.closeVideoBtn);
+    let pauseVideoBtns = document.querySelectorAll(selectors.pauseVideoBtn);
 
     playVideoBtns.forEach(function(btn) {
       btn.addEventListener('click', function(evt) {
-        var playerId = evt.currentTarget.dataset.controls;
+        let playerId = evt.currentTarget.dataset.controls;
         startVideoOnClick(playerId);
       });
     });
 
     closeVideoBtns.forEach(function(btn) {
       btn.addEventListener('click', function(evt) {
-        var playerId = evt.currentTarget.dataset.controls;
+        let playerId = evt.currentTarget.dataset.controls;
 
         evt.currentTarget.blur();
         closeVideo(playerId);
@@ -4886,7 +4871,7 @@ theme.Video = (function() {
 
     pauseVideoBtns.forEach(function(btn) {
       btn.addEventListener('click', function(evt) {
-        var playerId = evt.currentTarget.dataset.controls;
+        let playerId = evt.currentTarget.dataset.controls;
         togglePause(playerId);
       });
     });
@@ -4898,9 +4883,9 @@ theme.Video = (function() {
   }
 
   function createPlayer(key) {
-    var args = Object.assign(videoOptions, videos[key]);
+    let args = Object.assign(videoOptions, videos[key]);
 
-    args.playerVars.controls = args.controls;
+    args.playerlets.controls = args.controls;
     videoPlayers[key] = new YT.Player(key, args);
   }
 
@@ -4911,27 +4896,27 @@ theme.Video = (function() {
   }
 
   function setButtonLabels(videoWrapper, title) {
-    var playButtons = videoWrapper.querySelectorAll(selectors.playVideoBtn);
-    var closeButton = videoWrapper.querySelector(selectors.closeVideoBtn);
-    var pauseButton = videoWrapper.querySelector(selectors.pauseVideoBtn);
-    var closeButtonText = closeButton.querySelector(selectors.fallbackText);
+    let playButtons = videoWrapper.querySelectorAll(selectors.playVideoBtn);
+    let closeButton = videoWrapper.querySelector(selectors.closeVideoBtn);
+    let pauseButton = videoWrapper.querySelector(selectors.pauseVideoBtn);
+    let closeButtonText = closeButton.querySelector(selectors.fallbackText);
 
-    var pauseButtonStop = pauseButton.querySelector(selectors.pauseVideoStop);
-    var pauseButtonStopText = pauseButtonStop.querySelector(
+    let pauseButtonStop = pauseButton.querySelector(selectors.pauseVideoStop);
+    let pauseButtonStopText = pauseButtonStop.querySelector(
       selectors.fallbackText
     );
 
-    var pauseButtonResume = pauseButton.querySelector(
+    let pauseButtonResume = pauseButton.querySelector(
       selectors.pauseVideoResume
     );
-    var pauseButtonResumeText = pauseButtonResume.querySelector(
+    let pauseButtonResumeText = pauseButtonResume.querySelector(
       selectors.fallbackText
     );
 
     // Insert the video title retrieved from YouTube into the instructional text
     // for each button
     playButtons.forEach(function(playButton) {
-      var playButtonText = playButton.querySelector(selectors.fallbackText);
+      let playButtonText = playButton.querySelector(selectors.fallbackText);
 
       playButtonText.textContent = playButtonText.textContent.replace(
         '[video_title]',
@@ -4964,11 +4949,11 @@ theme.Video = (function() {
 
 
 theme.ProductModel = (function() {
-  var modelJsonSections = {};
-  var models = {};
-  var xrButtons = {};
+  let modelJsonSections = {};
+  let models = {};
+  let xrButtons = {};
 
-  var selectors = {
+  let selectors = {
     mediaGroup: '[data-product-single-media-group]',
     xrButton: '[data-shopify-xr]'
   };
@@ -4979,15 +4964,15 @@ theme.ProductModel = (function() {
     };
 
     modelViewerContainers.forEach(function(modelViewerContainer, index) {
-      var mediaId = modelViewerContainer.getAttribute('data-media-id');
-      var modelViewerElement = modelViewerContainer.querySelector(
+      let mediaId = modelViewerContainer.getAttribute('data-media-id');
+      let modelViewerElement = modelViewerContainer.querySelector(
         'model-viewer'
       );
-      var modelId = modelViewerElement.getAttribute('data-model-id');
+      let modelId = modelViewerElement.getAttribute('data-model-id');
 
       if (index === 0) {
-        var mediaGroup = modelViewerContainer.closest(selectors.mediaGroup);
-        var xrButton = mediaGroup.querySelector(selectors.xrButton);
+        let mediaGroup = modelViewerContainer.closest(selectors.mediaGroup);
+        let xrButton = mediaGroup.querySelector(selectors.xrButton);
         xrButtons[sectionId] = {
           element: xrButton,
           defaultId: modelId
@@ -5027,12 +5012,12 @@ theme.ProductModel = (function() {
       return;
     }
 
-    for (var sectionId in modelJsonSections) {
+    for (let sectionId in modelJsonSections) {
       if (modelJsonSections.hasOwnProperty(sectionId)) {
-        var modelSection = modelJsonSections[sectionId];
+        let modelSection = modelJsonSections[sectionId];
 
         if (modelSection.loaded) continue;
-        var modelJson = document.querySelector('#ModelJson-' + sectionId);
+        let modelJson = document.querySelector('#ModelJson-' + sectionId);
 
         window.ShopifyXR.addModels(JSON.parse(modelJson.innerHTML));
         modelSection.loaded = true;
@@ -5044,9 +5029,9 @@ theme.ProductModel = (function() {
   function setupModelViewerUi(errors) {
     if (errors) return;
 
-    for (var key in models) {
+    for (let key in models) {
       if (models.hasOwnProperty(key)) {
-        var model = models[key];
+        let model = models[key];
         if (!model.modelViewerUi) {
           model.modelViewerUi = new Shopify.ModelViewerUI(model.element);
         }
@@ -5056,7 +5041,7 @@ theme.ProductModel = (function() {
   }
 
   function setupModelViewerListeners(model) {
-    var xrButton = xrButtons[model.sectionId];
+    let xrButton = xrButtons[model.sectionId];
 
     model.container.addEventListener('mediaVisible', function() {
       xrButton.element.setAttribute('data-shopify-model3d-id', model.modelId);
@@ -5078,9 +5063,9 @@ theme.ProductModel = (function() {
   }
 
   function removeSectionModels(sectionId) {
-    for (var key in models) {
+    for (let key in models) {
       if (models.hasOwnProperty(key)) {
-        var model = models[key];
+        let model = models[key];
         if (model.sectionId === sectionId) {
           models[key].modelViewerUi.destroy();
           delete models[key];
@@ -5099,12 +5084,12 @@ theme.ProductModel = (function() {
 window.theme = window.theme || {};
 
 theme.FormStatus = (function() {
-  var selectors = {
+  let selectors = {
     statusMessage: '[data-form-status]'
   };
 
   function init() {
-    var statusMessages = document.querySelectorAll(selectors.statusMessage);
+    let statusMessages = document.querySelectorAll(selectors.statusMessage);
 
     statusMessages.forEach(function(statusMessage) {
       statusMessage.setAttribute('tabindex', -1);
@@ -5126,23 +5111,23 @@ theme.FormStatus = (function() {
 })();
 
 theme.Hero = (function() {
-  var classes = {
+  let classes = {
     indexSectionFlush: 'index-section--flush'
   };
 
-  var selectors = {
+  let selectors = {
     heroFixedWidthContent: '.hero-fixed-width__content',
     heroFixedWidthImage: '.hero-fixed-width__image'
   };
 
   function hero(el, sectionId) {
-    var hero = document.querySelector(el);
-    var layout = hero.getAttribute('data-layout');
-    var parentSection = document.querySelector('#shopify-section-' + sectionId);
-    var heroContent = parentSection.querySelector(
+    let hero = document.querySelector(el);
+    let layout = hero.getAttribute('data-layout');
+    let parentSection = document.querySelector('#shopify-section-' + sectionId);
+    let heroContent = parentSection.querySelector(
       selectors.heroFixedWidthContent
     );
-    var heroImage = parentSection.querySelector(selectors.heroFixedWidthImage);
+    let heroImage = parentSection.querySelector(selectors.heroFixedWidthImage);
 
     if (layout !== 'fixed_width') {
       return;
@@ -5158,8 +5143,8 @@ theme.Hero = (function() {
     });
 
     function heroFixedHeight() {
-      var contentHeight;
-      var imageHeight;
+      let contentHeight;
+      let imageHeight;
 
       if (heroContent) {
         contentHeight = heroContent.offsetHeight + 50;
@@ -5235,7 +5220,7 @@ theme.SearchResultsTemplate = (function() {
   }
 
   function renderProducts(products, searchQuery) {
-    var resultsCount = products.length;
+    let resultsCount = products.length;
 
     return [
       '<ul id="predictive-search-results" class="predictive-search__list" role="listbox" aria-labelledby="predictive-search">',
@@ -5301,7 +5286,7 @@ theme.SearchResultsTemplate = (function() {
       '<dl class="predictive-search-item__details price' +
         (product.isOnSale ? ' price--on-sale' : '') +
         (!product.available ? ' price--sold-out' : '') +
-        (!product.isPriceVaries && product.isCompareVaries
+        (!product.isPriceleties && product.isCompareleties
           ? ' price--compare-price-hidden'
           : '') +
         '">',
@@ -5319,12 +5304,12 @@ theme.SearchResultsTemplate = (function() {
       return '';
     }
 
-    var accessibilityAnnounceComma = '<span class="visually-hidden">, </span>';
+    let accessibilityAnnounceComma = '<span class="visually-hidden">, </span>';
 
-    var priceMarkup =
+    let priceMarkup =
       '<div class="price__regular">' + renderPrice(product) + '</div>';
 
-    var salePriceMarkup =
+    let salePriceMarkup =
       '<div class="price__sale">' + renderSalePrice(product) + '</div>';
 
     return (
@@ -5342,7 +5327,7 @@ theme.SearchResultsTemplate = (function() {
       '</dt>',
       '<dd>',
       '<span class="predictive-search-item__price predictive-search-item__price--sale">' +
-        (product.isPriceVaries
+        (product.isPriceleties
           ? theme.strings.fromLowestPrice.replace('[price]', product.price)
           : product.price) +
         '</span>',
@@ -5373,7 +5358,7 @@ theme.SearchResultsTemplate = (function() {
       '</dt>',
       '<dd>',
       '<span class="predictive-search-item__price">' +
-        (product.isPriceVaries
+        (product.isPriceleties
           ? theme.strings.fromLowestPrice.replace('[price]', product.price)
           : product.price) +
         '</span>',
@@ -5395,11 +5380,11 @@ theme.SearchResultsTemplate = (function() {
   }
 
   function normalizeProduct(product) {
-    var productOrVariant =
-      product.variants.length > 0 ? product.variants[0] : product;
+    let productOrletiant =
+      product.letiants.length > 0 ? product.letiants[0] : product;
 
     return {
-      url: productOrVariant.url,
+      url: productOrletiant.url,
       image: getProductImage(product),
       title: product.title,
       vendor: product.vendor || '',
@@ -5410,17 +5395,17 @@ theme.SearchResultsTemplate = (function() {
       ),
       available: product.available,
       isOnSale: isOnSale(product),
-      isPriceVaries: isPriceVaries(product),
-      isCompareVaries: isCompareVaries(product)
+      isPriceleties: isPriceleties(product),
+      isCompareleties: isCompareleties(product)
     };
   }
 
   function getProductImage(product) {
-    var image;
-    var featuredImage;
+    let image;
+    let featuredImage;
 
-    if (product.variants.length > 0 && product.variants[0].image !== null) {
-      featuredImage = product.variants[0].featured_image;
+    if (product.letiants.length > 0 && product.letiants[0].image !== null) {
+      featuredImage = product.letiants[0].featured_image;
     } else if (product.image) {
       featuredImage = product.featured_image;
     } else {
@@ -5445,23 +5430,23 @@ theme.SearchResultsTemplate = (function() {
     );
   }
 
-  function isPriceVaries(product) {
+  function isPriceleties(product) {
     return product.price_max !== product.price_min;
   }
 
-  function isCompareVaries(product) {
+  function isCompareleties(product) {
     return product.compare_at_price_max !== product.compare_at_price_min;
   }
 
   // Returns the number of optional product details to be shown,
   // values of the detailsList need to be boolean.
   function getDetailsCount() {
-    var detailsList = [
+    let detailsList = [
       theme.settings.predictiveSearchShowPrice,
       theme.settings.predictiveSearchShowVendor
     ];
 
-    var detailsCount = detailsList.reduce(function(acc, detail) {
+    let detailsCount = detailsList.reduce(function(acc, detail) {
       return acc + (detail ? 1 : 0);
     }, 0);
 
@@ -5484,9 +5469,9 @@ theme.SearchResultsTemplate = (function() {
   }
 
   return function(data) {
-    var products = data.products || [];
-    var isLoading = data.isLoading;
-    var searchQuery = data.searchQuery || '';
+    let products = data.products || [];
+    let isLoading = data.isLoading;
+    let searchQuery = data.searchQuery || '';
 
     if (isLoading && products.length === 0) {
       return loadingState();
@@ -5519,7 +5504,7 @@ window.theme = window.theme || {};
   }
 
   function isPredictiveSearchSupported() {
-    var shopifyFeatures = JSON.parse(
+    let shopifyFeatures = JSON.parse(
       document.getElementById('shopify-features').textContent
     );
 
@@ -5544,7 +5529,7 @@ window.theme = window.theme || {};
 
   // if there is nothing in the search field, prevent submit
   function validateSearchInput(searchEl, evt) {
-    var isInputValueEmpty = searchEl.value.trim().length === 0;
+    let isInputValueEmpty = searchEl.value.trim().length === 0;
     if (!isInputValueEmpty) {
       return;
     }
@@ -5557,19 +5542,19 @@ window.theme = window.theme || {};
   }
 
   window.theme.SearchPage = (function() {
-    var selectors = {
+    let selectors = {
       searchReset: '[data-search-page-predictive-search-clear]',
       searchInput: '[data-search-page-predictive-search-input]',
       searchSubmit: '[data-search-page-predictive-search-submit]',
       searchResults: '[data-predictive-search-mount="default"]'
     };
 
-    var componentInstance;
+    let componentInstance;
 
     function init(config) {
-      var searchInput = document.querySelector(selectors.searchInput);
-      var searchSubmit = document.querySelector(selectors.searchSubmit);
-      var searchUrl = searchInput.dataset.baseUrl;
+      let searchInput = document.querySelector(selectors.searchInput);
+      let searchSubmit = document.querySelector(selectors.searchSubmit);
+      let searchUrl = searchInput.dataset.baseUrl;
 
       componentInstance = new window.Shopify.theme.PredictiveSearchComponent({
         selectors: {
@@ -5586,10 +5571,10 @@ window.theme = window.theme || {};
             return;
           }
 
-          var searchInputBoundingRect = searchInput.getBoundingClientRect();
-          var bodyHeight = document.body.offsetHeight;
-          var offset = 50;
-          var resultsMaxHeight =
+          let searchInputBoundingRect = searchInput.getBoundingClientRect();
+          let bodyHeight = document.body.offsetHeight;
+          let offset = 50;
+          let resultsMaxHeight =
             bodyHeight - searchInputBoundingRect.bottom - offset;
 
           nodes.result.style.maxHeight = resultsMaxHeight + 'px';
@@ -5619,19 +5604,19 @@ window.theme = window.theme || {};
   })();
 
   window.theme.SearchHeader = (function() {
-    var selectors = {
+    let selectors = {
       searchInput: '[data-predictive-search-drawer-input]',
       searchResults: '[data-predictive-search-mount="drawer"]',
       searchFormContainer: '[data-search-form-container]',
       searchSubmit: '[data-search-form-submit]'
     };
 
-    var componentInstance;
+    let componentInstance;
 
     function init(config) {
-      var searchInput = document.querySelector(selectors.searchInput);
-      var searchSubmit = document.querySelector(selectors.searchSubmit);
-      var searchUrl = searchInput.dataset.baseUrl;
+      let searchInput = document.querySelector(selectors.searchInput);
+      let searchSubmit = document.querySelector(selectors.searchSubmit);
+      let searchUrl = searchInput.dataset.baseUrl;
 
       componentInstance = new window.Shopify.theme.PredictiveSearchComponent({
         selectors: {
@@ -5647,11 +5632,11 @@ window.theme = window.theme || {};
           return false;
         },
         onOpen: function(nodes) {
-          var searchInputBoundingRect = searchInput.getBoundingClientRect();
+          let searchInputBoundingRect = searchInput.getBoundingClientRect();
 
           // For tablet screens and up, stop the scroll area from extending past
           // the bottom of the screen because we're locking the body scroll
-          var maxHeight =
+          let maxHeight =
             window.innerHeight -
             searchInputBoundingRect.bottom -
             (config.isTabletAndUp ? 20 : 0);
@@ -5699,13 +5684,13 @@ window.theme = window.theme || {};
   })();
 
   window.theme.Search = (function() {
-    var classes = {
+    let classes = {
       searchTemplate: 'template-search'
     };
-    var selectors = {
+    let selectors = {
       siteHeader: '.site-header'
     };
-    var mediaQueryList = {
+    let mediaQueryList = {
       mobile: window.matchMedia('(max-width: 749px)'),
       tabletAndUp: window.matchMedia('(min-width: 750px)')
     };
@@ -5772,7 +5757,7 @@ window.theme = window.theme || {};
 window.theme = window.theme || {};
 
 theme.SearchDrawer = (function() {
-  var selectors = {
+  let selectors = {
     headerSection: '[data-header-section]',
     drawer: '[data-predictive-search-drawer]',
     drawerOpenButton: '[data-predictive-search-open-drawer]',
@@ -5780,7 +5765,7 @@ theme.SearchDrawer = (function() {
     predictiveSearchWrapper: '[data-predictive-search-mount="drawer"]'
   };
 
-  var drawerInstance;
+  let drawerInstance;
 
   function init() {
     setAccessibilityProps();
@@ -5793,7 +5778,7 @@ theme.SearchDrawer = (function() {
       },
       onDrawerClose: function() {
         theme.SearchHeader.clearAndClose();
-        var drawerOpenButton = document.querySelector(
+        let drawerOpenButton = document.querySelector(
           selectors.drawerOpenButton
         );
 
@@ -5807,7 +5792,7 @@ theme.SearchDrawer = (function() {
   }
 
   function setAccessibilityProps() {
-    var drawerOpenButton = document.querySelector(selectors.drawerOpenButton);
+    let drawerOpenButton = document.querySelector(selectors.drawerOpenButton);
 
     if (drawerOpenButton) {
       drawerOpenButton.setAttribute('aria-controls', 'SearchDrawer');
@@ -5817,8 +5802,8 @@ theme.SearchDrawer = (function() {
   }
 
   function setHeight() {
-    var searchDrawer = document.querySelector(selectors.drawer);
-    var headerHeight = document.querySelector(selectors.headerSection)
+    let searchDrawer = document.querySelector(selectors.drawer);
+    let headerHeight = document.querySelector(selectors.headerSection)
       .offsetHeight;
 
     searchDrawer.style.height = headerHeight + 'px';
@@ -5843,7 +5828,7 @@ theme.SearchDrawer = (function() {
 })();
 
 theme.Disclosure = (function() {
-  var selectors = {
+  let selectors = {
     disclosureForm: '[data-disclosure-form]',
     disclosureList: '[data-disclosure-list]',
     disclosureToggle: '[data-disclosure-toggle]',
@@ -5851,7 +5836,7 @@ theme.Disclosure = (function() {
     disclosureOptions: '[data-disclosure-option]'
   };
 
-  var classes = {
+  let classes = {
     listVisible: 'disclosure-list--visible'
   };
 
@@ -5929,7 +5914,7 @@ theme.Disclosure = (function() {
     },
 
     _onDisclosureToggleFocusOut: function(event) {
-      var disclosureLostFocus =
+      let disclosureLostFocus =
         this.container.contains(event.relatedTarget) === false;
 
       if (disclosureLostFocus) {
@@ -5938,9 +5923,9 @@ theme.Disclosure = (function() {
     },
 
     _onDisclosureListFocusOut: function(event) {
-      var childInFocus = event.currentTarget.contains(event.relatedTarget);
+      let childInFocus = event.currentTarget.contains(event.relatedTarget);
 
-      var isVisible = this.cache.disclosureList.classList.contains(
+      let isVisible = this.cache.disclosureList.classList.contains(
         classes.listVisible
       );
 
@@ -5956,8 +5941,8 @@ theme.Disclosure = (function() {
     },
 
     _onBodyClick: function(event) {
-      var isOption = this.container.contains(event.target);
-      var isVisible = this.cache.disclosureList.classList.contains(
+      let isOption = this.container.contains(event.target);
+      let isVisible = this.cache.disclosureList.classList.contains(
         classes.listVisible
       );
 
@@ -5977,7 +5962,7 @@ theme.Disclosure = (function() {
     },
 
     _toggleList: function() {
-      var ariaExpanded =
+      let ariaExpanded =
         this.cache.disclosureToggle.getAttribute('aria-expanded') === 'true';
       this.cache.disclosureList.classList.toggle(classes.listVisible);
       this.cache.disclosureToggle.setAttribute('aria-expanded', !ariaExpanded);
@@ -6022,15 +6007,15 @@ theme.Disclosure = (function() {
 })();
 
 theme.Zoom = (function() {
-  var selectors = {
+  let selectors = {
     imageZoom: '[data-image-zoom]'
   };
 
-  var classes = {
+  let classes = {
     zoomImg: 'zoomImg'
   };
 
-  var attributes = {
+  let attributes = {
     imageZoomTarget: 'data-image-zoom-target'
   };
 
@@ -6054,8 +6039,8 @@ theme.Zoom = (function() {
     },
 
     _init: function() {
-      var targetWidth = this.cache.targetImage.width;
-      var targetHeight = this.cache.targetImage.height;
+      let targetWidth = this.cache.targetImage.width;
+      let targetHeight = this.cache.targetImage.height;
 
       if (this.cache.sourceImage === this.cache.targetImage) {
         this.sourceWidth = targetWidth;
@@ -6095,15 +6080,15 @@ theme.Zoom = (function() {
 
     _move: function(e) {
       // get left and top position within the "source image" zone
-      var left =
+      let left =
         e.pageX -
         (this.cache.sourceImage.getBoundingClientRect().left + window.scrollX);
-      var top =
+      let top =
         e.pageY -
         (this.cache.sourceImage.getBoundingClientRect().top + window.scrollY);
       // make sure the left and top position don't go
       // above or beyond the target image zone
-      var position = this._setTopLeftMaxValues(top, left);
+      let position = this._setTopLeftMaxValues(top, left);
 
       top = position.top;
       left = position.left;
@@ -6158,7 +6143,7 @@ theme.Zoom = (function() {
     _loadImage: function() {
       // eslint-disable-next-line
       return new Promise(function(resolve, reject) {
-          var image = new Image();
+          let image = new Image();
           image.setAttribute('role', 'presentation');
           image.setAttribute(attributes.imageZoomTarget, true);
           image.classList.add(classes.zoomImg);
@@ -6176,7 +6161,7 @@ theme.Zoom = (function() {
     },
 
     unload: function() {
-      var targetImage = this.container.querySelector(
+      let targetImage = this.container.querySelector(
         '[' + attributes.imageZoomTarget + ']'
       );
       if (targetImage) {
@@ -6195,7 +6180,7 @@ theme.Zoom = (function() {
 
 /* ================ TEMPLATES ================ */
 (function() {
-  var filterBys = document.querySelectorAll('[data-blog-tag-filter]');
+  let filterBys = document.querySelectorAll('[data-blog-tag-filter]');
 
   if (!filterBys.length) return;
 
@@ -6211,7 +6196,7 @@ theme.Zoom = (function() {
 window.theme = theme || {};
 
 theme.customerTemplates = (function() {
-  var selectors = {
+  let selectors = {
     RecoverHeading: '#RecoverHeading',
     RecoverEmail: '#RecoverEmail',
     LoginHeading: '#LoginHeading'
@@ -6221,8 +6206,8 @@ theme.customerTemplates = (function() {
     this.recoverHeading = document.querySelector(selectors.RecoverHeading);
     this.recoverEmail = document.querySelector(selectors.RecoverEmail);
     this.loginHeading = document.querySelector(selectors.LoginHeading);
-    var recoverPassword = document.getElementById('RecoverPassword');
-    var hideRecoverPasswordLink = document.getElementById(
+    let recoverPassword = document.getElementById('RecoverPassword');
+    let hideRecoverPasswordLink = document.getElementById(
       'HideRecoverPasswordLink'
     );
 
@@ -6291,7 +6276,7 @@ theme.customerTemplates = (function() {
    *
    */
   function resetPasswordSuccess() {
-    var formState = document.querySelector('.reset-password-success');
+    let formState = document.querySelector('.reset-password-success');
 
     // check if reset password form was successfully submited.
     if (!formState) {
@@ -6299,7 +6284,7 @@ theme.customerTemplates = (function() {
     }
 
     // show success message
-    var resetSuccess = document.getElementById('ResetSuccess');
+    let resetSuccess = document.getElementById('ResetSuccess');
     resetSuccess.classList.remove('hide');
     resetSuccess.focus();
   }
@@ -6310,8 +6295,8 @@ theme.customerTemplates = (function() {
    *
    */
   function customerAddressForm() {
-    var newAddressForm = document.getElementById('AddressNewForm');
-    var newAddressFormButton = document.getElementById('AddressNewButton');
+    let newAddressForm = document.getElementById('AddressNewForm');
+    let newAddressFormButton = document.getElementById('AddressNewButton');
 
     if (!newAddressForm) {
       return;
@@ -6333,10 +6318,10 @@ theme.customerTemplates = (function() {
     document
       .querySelectorAll('.address-country-option')
       .forEach(function(option) {
-        var formId = option.dataset.formId;
-        var countrySelector = 'AddressCountry_' + formId;
-        var provinceSelector = 'AddressProvince_' + formId;
-        var containerSelector = 'AddressProvinceContainer_' + formId;
+        let formId = option.dataset.formId;
+        let countrySelector = 'AddressCountry_' + formId;
+        let provinceSelector = 'AddressProvince_' + formId;
+        let containerSelector = 'AddressProvinceContainer_' + formId;
 
         // eslint-disable-next-line no-new
         new Shopify.CountryProvinceSelector(countrySelector, provinceSelector, {
@@ -6347,7 +6332,7 @@ theme.customerTemplates = (function() {
     // Toggle new/edit address forms
     document.querySelectorAll('.address-new-toggle').forEach(function(button) {
       button.addEventListener('click', function() {
-        var isExpanded =
+        let isExpanded =
           newAddressFormButton.getAttribute('aria-expanded') === 'true';
 
         newAddressForm.classList.toggle('hide');
@@ -6358,10 +6343,10 @@ theme.customerTemplates = (function() {
 
     document.querySelectorAll('.address-edit-toggle').forEach(function(button) {
       button.addEventListener('click', function(evt) {
-        var formId = evt.target.dataset.formId;
-        var editButton = document.getElementById('EditFormButton_' + formId);
-        var editAddress = document.getElementById('EditAddress_' + formId);
-        var isExpanded = editButton.getAttribute('aria-expanded') === 'true';
+        let formId = evt.target.dataset.formId;
+        let editButton = document.getElementById('EditFormButton_' + formId);
+        let editAddress = document.getElementById('EditAddress_' + formId);
+        let isExpanded = editButton.getAttribute('aria-expanded') === 'true';
 
         editAddress.classList.toggle('hide');
         editButton.setAttribute('aria-expanded', !isExpanded);
@@ -6371,8 +6356,8 @@ theme.customerTemplates = (function() {
 
     document.querySelectorAll('.address-delete').forEach(function(button) {
       button.addEventListener('click', function(evt) {
-        var target = evt.target.dataset.target;
-        var confirmMessage = evt.target.dataset.confirmMessage;
+        let target = evt.target.dataset.target;
+        let confirmMessage = evt.target.dataset.confirmMessage;
 
         // eslint-disable-next-line no-alert
         if (
@@ -6394,7 +6379,7 @@ theme.customerTemplates = (function() {
    *
    */
   function checkUrlHash() {
-    var hash = window.location.hash;
+    let hash = window.location.hash;
 
     // Allow deep linking to recover password form
     if (hash === '#recover') {
@@ -6417,7 +6402,7 @@ theme.customerTemplates = (function() {
 window.theme = window.theme || {};
 
 theme.Cart = (function() {
-  var selectors = {
+  let selectors = {
     cartCount: '[data-cart-count]',
     cartCountBubble: '[data-cart-count-bubble]',
     cartDiscount: '[data-cart-discount]',
@@ -6470,7 +6455,7 @@ theme.Cart = (function() {
     unitPriceGroup: '[data-unit-price-group]'
   };
 
-  var classes = {
+  let classes = {
     cartNoCookies: 'cart--no-cookies',
     cartRemovedProduct: 'cart__removed-product',
     thumbnails: 'cart__image',
@@ -6478,7 +6463,7 @@ theme.Cart = (function() {
     inputError: 'input--error'
   };
 
-  var attributes = {
+  let attributes = {
     cartItemIndex: 'data-cart-item-index',
     cartItemKey: 'data-cart-item-key',
     cartItemQuantity: 'data-cart-item-quantity',
@@ -6487,7 +6472,7 @@ theme.Cart = (function() {
     quantityItem: 'data-quantity-item'
   };
 
-  var mediumUpQuery = '(min-width: ' + theme.breakpoints.medium + 'px)';
+  let mediumUpQuery = '(min-width: ' + theme.breakpoints.medium + 'px)';
 
   function Cart(container) {
     this.container = container;
@@ -6542,7 +6527,7 @@ theme.Cart = (function() {
 
   Cart.prototype = Object.assign({}, Cart.prototype, {
     _setupCartTemplates: function() {
-      var cartItem = this.container.querySelector(selectors.cartItem);
+      let cartItem = this.container.querySelector(selectors.cartItem);
       if (!cartItem) return;
 
       this.itemTemplate = this.container
@@ -6577,18 +6562,18 @@ theme.Cart = (function() {
     _handleInputQty: function(evt) {
       if (!evt.target.hasAttribute('data-quantity-input')) return;
 
-      var input = evt.target;
-      var itemElement = input.closest(selectors.cartItem);
+      let input = evt.target;
+      let itemElement = input.closest(selectors.cartItem);
 
-      var itemIndex = Number(input.getAttribute('data-quantity-item'));
+      let itemIndex = Number(input.getAttribute('data-quantity-item'));
 
-      var itemQtyInputs = this.container.querySelectorAll(
+      let itemQtyInputs = this.container.querySelectorAll(
         "[data-quantity-item='" + itemIndex + "']"
       );
 
-      var value = parseInt(input.value);
+      let value = parseInt(input.value);
 
-      var isValidValue = !(value < 0 || isNaN(value));
+      let isValidValue = !(value < 0 || isNaN(value));
 
       itemQtyInputs.forEach(function(element) {
         element.value = value;
@@ -6613,10 +6598,10 @@ theme.Cart = (function() {
       itemQtyInputs,
       value
     ) {
-      var key = itemElement.getAttribute(attributes.cartItemKey);
-      var index = Number(itemElement.getAttribute(attributes.cartItemIndex));
+      let key = itemElement.getAttribute(attributes.cartItemKey);
+      let index = Number(itemElement.getAttribute(attributes.cartItemIndex));
 
-      var request = {
+      let request = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;'
@@ -6641,7 +6626,7 @@ theme.Cart = (function() {
             }
 
             // Cache current in-focus element, used later to restore focus
-            var inFocus = document.activeElement;
+            let inFocus = document.activeElement;
 
             this._createCart(state);
 
@@ -6650,15 +6635,15 @@ theme.Cart = (function() {
               return;
             }
 
-            var item = this.getItem(key, state);
+            let item = this.getItem(key, state);
 
             this._updateLiveRegion(item);
 
             // Restore focus to the "equivalent" element after the DOM has been updated
             if (!inFocus) return;
-            var row = inFocus.closest('[' + attributes.cartItemIndex + ']');
+            let row = inFocus.closest('[' + attributes.cartItemIndex + ']');
             if (!row) return;
-            var target = this.container.querySelector(
+            let target = this.container.querySelector(
               '[' +
                 attributes.cartItemIndex +
                 '="' +
@@ -6686,7 +6671,7 @@ theme.Cart = (function() {
 
     _liveRegionText: function(item) {
       // Dummy content for live region
-      var liveRegionText =
+      let liveRegionText =
         theme.strings.update +
         ': [QuantityLabel]: [Quantity], [Regular] [$$] [DiscountedPrice] [$]. [PriceInformation]';
 
@@ -6696,14 +6681,14 @@ theme.Cart = (function() {
         .replace('[Quantity]', item.quantity);
 
       // Update pricing information
-      var regularLabel = '';
-      var regularPrice = theme.Currency.formatMoney(
+      let regularLabel = '';
+      let regularPrice = theme.Currency.formatMoney(
         item.original_line_price,
         theme.moneyFormat
       );
-      var discountLabel = '';
-      var discountPrice = '';
-      var discountInformation = '';
+      let discountLabel = '';
+      let discountPrice = '';
+      let discountInformation = '';
 
       if (item.original_line_price > item.final_line_price) {
         regularLabel = theme.strings.regularTotal;
@@ -6731,7 +6716,7 @@ theme.Cart = (function() {
     _updateLiveRegion: function(item) {
       if (!item) return;
 
-      var liveRegion = this.container.querySelector(selectors.cartStatus);
+      let liveRegion = this.container.querySelector(selectors.cartStatus);
 
       liveRegion.textContent = this._liveRegionText(item);
       liveRegion.setAttribute('aria-hidden', false);
@@ -6742,9 +6727,9 @@ theme.Cart = (function() {
     },
 
     _createCart: function(state) {
-      var cartDiscountList = this._createCartDiscountList(state);
+      let cartDiscountList = this._createCartDiscountList(state);
 
-      var cartTable = this.container.querySelector(selectors.cartLineItems);
+      let cartTable = this.container.querySelector(selectors.cartLineItems);
       cartTable.innerHTML = '';
 
       this._createLineItemList(state).forEach(function(lineItem) {
@@ -6760,7 +6745,7 @@ theme.Cart = (function() {
         this.cartNotes.value = state.note;
       }
 
-      var discountWrapper = this.container.querySelector(
+      let discountWrapper = this.container.querySelector(
         selectors.cartDiscountWrapper
       );
 
@@ -6788,7 +6773,7 @@ theme.Cart = (function() {
     _createCartDiscountList: function(cart) {
       return cart.cart_level_discount_applications.map(
         function(discount) {
-          var discountNode = this.cartDiscountTemplate.cloneNode(true);
+          let discountNode = this.cartDiscountTemplate.cloneNode(true);
 
           discountNode.querySelector(selectors.cartDiscountTitle).textContent =
             discount.title;
@@ -6808,23 +6793,23 @@ theme.Cart = (function() {
     _createLineItemList: function(state) {
       return state.items.map(
         function(item, index) {
-          var itemNode = this.itemTemplate.cloneNode(true);
+          let itemNode = this.itemTemplate.cloneNode(true);
 
-          var itemPriceList = this.itemPriceListTemplate.cloneNode(true);
+          let itemPriceList = this.itemPriceListTemplate.cloneNode(true);
 
           this._setLineItemAttributes(itemNode, item, index);
           this._setLineItemImage(itemNode, item.featured_image);
 
-          var cartItemTitle = itemNode.querySelector(selectors.cartItemTitle);
+          let cartItemTitle = itemNode.querySelector(selectors.cartItemTitle);
           cartItemTitle.textContent = item.product_title;
           cartItemTitle.setAttribute('href', item.url);
 
-          var selling_plan_name = item.selling_plan_allocation
+          let selling_plan_name = item.selling_plan_allocation
             ? item.selling_plan_allocation.selling_plan.name
             : null;
 
-          var productDetailsList = this._createProductDetailsList(
-            item.product_has_only_default_variant,
+          let productDetailsList = this._createProductDetailsList(
+            item.product_has_only_default_letiant,
             item.options_with_values,
             item.properties,
             selling_plan_name
@@ -6850,11 +6835,11 @@ theme.Cart = (function() {
 
           this._setItemPrice(itemNode, itemPriceList);
 
-          var itemDiscountList = this._createItemDiscountList(item);
+          let itemDiscountList = this._createItemDiscountList(item);
           this._setItemDiscountList(itemNode, itemDiscountList);
           this._setQuantityInputs(itemNode, item, index);
 
-          var itemLinePrice = this._createItemPrice(
+          let itemLinePrice = this._createItemPrice(
             item.original_line_price,
             item.final_line_price
           );
@@ -6875,9 +6860,9 @@ theme.Cart = (function() {
     },
 
     _setLineItemImage: function(itemNode, featuredImage) {
-      var image = itemNode.querySelector(selectors.cartItemImage);
+      let image = itemNode.querySelector(selectors.cartItemImage);
 
-      var sizedImageUrl =
+      let sizedImageUrl =
         featuredImage.url !== null
           ? theme.Images.getSizedImageUrl(featuredImage.url, 'x190')
           : null;
@@ -6892,7 +6877,7 @@ theme.Cart = (function() {
     },
 
     _setProductDetailsList: function(item, productDetailsList) {
-      var itemDetails = item.querySelector(selectors.cartItemDetails);
+      let itemDetails = item.querySelector(selectors.cartItemDetails);
 
       if (productDetailsList.length) {
         itemDetails.classList.remove(classes.hide);
@@ -6916,7 +6901,7 @@ theme.Cart = (function() {
     },
 
     _setItemDiscountList: function(item, discountList) {
-      var itemDiscountList = item.querySelector(selectors.cartItemDiscountList);
+      let itemDiscountList = item.querySelector(selectors.cartItemDiscountList);
 
       if (discountList.length === 0) {
         itemDiscountList.innerHTML = '';
@@ -6944,8 +6929,8 @@ theme.Cart = (function() {
     },
 
     _setQuantityInputs: function(itemNode, item, index) {
-      var mobileInput = itemNode.querySelector(selectors.quantityInputMobile);
-      var desktopInput = itemNode.querySelector(selectors.quantityInputDesktop);
+      let mobileInput = itemNode.querySelector(selectors.quantityInputMobile);
+      let desktopInput = itemNode.querySelector(selectors.quantityInputDesktop);
 
       mobileInput.setAttribute('id', 'updates_' + item.key);
       desktopInput.setAttribute('id', 'updates_large_' + item.key);
@@ -6965,11 +6950,11 @@ theme.Cart = (function() {
     },
 
     setQuantityFormControllers: function() {
-      var desktopQuantityInputs = document.querySelectorAll(
+      let desktopQuantityInputs = document.querySelectorAll(
         selectors.quantityInputDesktop
       );
 
-      var mobileQuantityInputs = document.querySelectorAll(
+      let mobileQuantityInputs = document.querySelectorAll(
         selectors.quantityInputMobile
       );
 
@@ -7000,14 +6985,14 @@ theme.Cart = (function() {
     },
 
     _createProductDetailsList: function(
-      product_has_only_default_variant,
+      product_has_only_default_letiant,
       options,
       properties,
       selling_plan_name
     ) {
-      var optionsPropertiesHTML = [];
+      let optionsPropertiesHTML = [];
 
-      if (!product_has_only_default_variant) {
+      if (!product_has_only_default_letiant) {
         optionsPropertiesHTML = optionsPropertiesHTML.concat(
           this._getOptionList(options)
         );
@@ -7031,7 +7016,7 @@ theme.Cart = (function() {
     _getOptionList: function(options) {
       return options.map(
         function(option) {
-          var optionElement = this.itemOptionTemplate.cloneNode(true);
+          let optionElement = this.itemOptionTemplate.cloneNode(true);
 
           optionElement.textContent = option.name + ': ' + option.value;
           optionElement.classList.remove(classes.hide);
@@ -7042,22 +7027,18 @@ theme.Cart = (function() {
     },
 
     _getPropertyList: function(properties) {
-      var propertiesArray =
+      let propertiesArray =
         properties !== null ? Object.entries(properties) : [];
 
-      var filteredPropertiesArray = propertiesArray.filter(function(property) {
+      let filteredPropertiesArray = propertiesArray.filter(function(property) {
         // Line item properties prefixed with an underscore are not to be displayed
         // if the property value has a length of 0 (empty), don't display it
-        if (property[0].charAt(0) === '_' || property[1].length === 0) {
-          return false;
-        } else {
-          return true;
-        }
+        return !(property[0].charAt(0) === '_' || property[1].length === 0);
       });
 
       return filteredPropertiesArray.map(
         function(property) {
-          var propertyElement = this.itemPropertyTemplate.cloneNode(true);
+          let propertyElement = this.itemPropertyTemplate.cloneNode(true);
 
           propertyElement.querySelector(
             selectors.cartItemPropertyName
@@ -7086,7 +7067,7 @@ theme.Cart = (function() {
     },
 
     _getSellingPlanName: function(selling_plan_name) {
-      var sellingPlanNameElement = this.itemSellingPlanNameTemplate.cloneNode(
+      let sellingPlanNameElement = this.itemSellingPlanNameTemplate.cloneNode(
         true
       );
 
@@ -7097,12 +7078,12 @@ theme.Cart = (function() {
     },
 
     _createItemPrice: function(original_price, final_price) {
-      var originalPriceHTML = theme.Currency.formatMoney(
+      let originalPriceHTML = theme.Currency.formatMoney(
         original_price,
         theme.moneyFormat
       );
 
-      var resultHTML;
+      let resultHTML;
 
       if (original_price !== final_price) {
         resultHTML = this.itemPriceListTemplate
@@ -7134,11 +7115,11 @@ theme.Cart = (function() {
     },
 
     _createUnitPrice: function(unitPrice, unitPriceMeasurement) {
-      var unitPriceGroup = this.itemPriceListTemplate
+      let unitPriceGroup = this.itemPriceListTemplate
         .querySelector(selectors.unitPriceGroup)
         .cloneNode(true);
 
-      var unitPriceBaseUnit =
+      let unitPriceBaseUnit =
         (unitPriceMeasurement.reference_value !== 1
           ? unitPriceMeasurement.reference_value
           : '') + unitPriceMeasurement.reference_unit;
@@ -7159,7 +7140,7 @@ theme.Cart = (function() {
     _createItemDiscountList: function(item) {
       return item.line_level_discount_allocations.map(
         function(discount) {
-          var discountNode = this.itemDiscountTemplate.cloneNode(true);
+          let discountNode = this.itemDiscountTemplate.cloneNode(true);
 
           discountNode.querySelector(
             selectors.cartItemDiscountTitle
@@ -7199,7 +7180,7 @@ theme.Cart = (function() {
     },
 
     _hideQuantityErrorMessage: function() {
-      var errorMessages = document.querySelectorAll(
+      let errorMessages = document.querySelectorAll(
         selectors.cartQuantityErrorMessageWrapper
       );
 
@@ -7228,13 +7209,13 @@ theme.Cart = (function() {
     _onNoteChange: function(evt) {
       if (!evt.target.hasAttribute('data-cart-notes')) return;
 
-      var note = evt.target.value;
+      let note = evt.target.value;
       this._hideCartError();
       this._hideQuantityErrorMessage();
 
-      var headers = new Headers({ 'Content-Type': 'application/json' });
+      let headers = new Headers({ 'Content-Type': 'application/json' });
 
-      var request = {
+      let request = {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ note: note })
@@ -7270,12 +7251,12 @@ theme.Cart = (function() {
       if (!evt.target.hasAttribute('data-cart-remove')) return;
 
       evt.preventDefault();
-      var lineItem = evt.target.closest(selectors.cartItem);
-      var index = Number(lineItem.getAttribute(attributes.cartItemIndex));
+      let lineItem = evt.target.closest(selectors.cartItem);
+      let index = Number(lineItem.getAttribute(attributes.cartItemIndex));
 
       this._hideCartError();
 
-      var request = {
+      let request = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;'
@@ -7310,8 +7291,8 @@ theme.Cart = (function() {
     },
 
     _showRemoveMessage: function(lineItem) {
-      var index = lineItem.getAttribute('data-cart-item-index');
-      var removeMessage = this._getRemoveMessage(lineItem);
+      let index = lineItem.getAttribute('data-cart-item-index');
+      let removeMessage = this._getRemoveMessage(lineItem);
 
       if (index - 1 === 0) {
         this.container
@@ -7327,9 +7308,9 @@ theme.Cart = (function() {
     },
 
     _getRemoveMessage: function(lineItem) {
-      var formattedMessage = this._formatRemoveMessage(lineItem);
+      let formattedMessage = this._formatRemoveMessage(lineItem);
 
-      var tableCell = lineItem
+      let tableCell = lineItem
         .querySelector(selectors.cartTableCell)
         .cloneNode(true);
 
@@ -7347,9 +7328,9 @@ theme.Cart = (function() {
     },
 
     _formatRemoveMessage: function(lineItem) {
-      var quantity = lineItem.getAttribute('data-cart-item-quantity');
-      var url = lineItem.getAttribute(attributes.cartItemUrl);
-      var title = lineItem.getAttribute(attributes.cartItemTitle);
+      let quantity = lineItem.getAttribute('data-cart-item-quantity');
+      let url = lineItem.getAttribute(attributes.cartItemUrl);
+      let title = lineItem.getAttribute(attributes.cartItemTitle);
 
       return theme.strings.removedItemMessage
         .replace('[quantity]', quantity)
@@ -7400,11 +7381,11 @@ theme.Cart = (function() {
 window.theme = window.theme || {};
 
 theme.Filters = (function() {
-  var settings = {
+  let settings = {
     mediaQueryMediumUp: '(min-width: ' + theme.breakpoints.medium + 'px)'
   };
 
-  var selectors = {
+  let selectors = {
     filterSelection: '#FilterTags',
     sortSelection: '#SortBy',
     selectInput: '[data-select-input]'
@@ -7460,9 +7441,9 @@ theme.Filters = (function() {
     _initParams: function() {
       this.queryParams = {};
       if (location.search.length) {
-        var aKeyValue;
-        var aCouples = location.search.substr(1).split('&');
-        for (var i = 0; i < aCouples.length; i++) {
+        let aKeyValue;
+        let aCouples = location.search.substr(1).split('&');
+        for (let i = 0; i < aCouples.length; i++) {
           aKeyValue = aCouples[i].split('=');
           if (aKeyValue.length > 1) {
             this.queryParams[
@@ -7539,33 +7520,33 @@ theme.HeaderSection = (function() {
 })();
 
 theme.Maps = (function() {
-  var config = {
+  let config = {
     zoom: 14
   };
-  var apiStatus = null;
-  var mapsToLoad = [];
+  let apiStatus = null;
+  let mapsToLoad = [];
 
-  var errors = {
+  let errors = {
     addressNoResults: theme.strings.addressNoResults,
     addressQueryLimit: theme.strings.addressQueryLimit,
     addressError: theme.strings.addressError,
     authError: theme.strings.authError
   };
 
-  var selectors = {
+  let selectors = {
     section: '[data-section-type="map"]',
     map: '[data-map]',
     mapOverlay: '[data-map-overlay]'
   };
 
-  var classes = {
+  let classes = {
     mapError: 'map-section--load-error',
     errorMsg: 'map-section__error errors text-center'
   };
 
   // Global function called by Google on auth errors.
   // Show an auto error message on all map instances.
-  // eslint-disable-next-line camelcase, no-unused-vars
+  // eslint-disable-next-line camelcase, no-unused-lets
   window.gm_authFailure = function() {
     if (!Shopify.designMode) {
       return;
@@ -7622,8 +7603,8 @@ theme.Maps = (function() {
 
   function geolocate(map) {
     return new Promise(function(resolve, reject) {
-      var geocoder = new google.maps.Geocoder();
-      var address = map.dataset.addressSetting;
+      let geocoder = new google.maps.Geocoder();
+      let address = map.dataset.addressSetting;
 
       geocoder.geocode({ address: address }, function(results, status) {
         if (status !== google.maps.GeocoderStatus.OK) {
@@ -7640,7 +7621,7 @@ theme.Maps = (function() {
       return geolocate(this.map)
         .then(
           function(results) {
-            var mapOptions = {
+            let mapOptions = {
               zoom: config.zoom,
               center: results[0].geometry.location,
               draggable: false,
@@ -7650,11 +7631,11 @@ theme.Maps = (function() {
               disableDefaultUI: true
             };
 
-            var map = (this.map = new google.maps.Map(this.map, mapOptions));
-            var center = (this.center = map.getCenter());
+            let map = (this.map = new google.maps.Map(this.map, mapOptions));
+            let center = (this.center = map.getCenter());
 
-            //eslint-disable-next-line no-unused-vars
-            var marker = new google.maps.Marker({
+            //eslint-disable-next-line no-unused-lets
+            let marker = new google.maps.Marker({
               map: map,
               position: map.getCenter()
             });
@@ -7675,7 +7656,7 @@ theme.Maps = (function() {
         )
         .catch(
           function() {
-            var errorMessage;
+            let errorMessage;
 
             switch (status) {
               case 'ZERO_RESULTS':
@@ -7720,12 +7701,12 @@ theme.Maps = (function() {
 theme.Product = (function() {
   function Product(container) {
     this.container = container;
-    var sectionId = container.getAttribute('data-section-id');
+    let sectionId = container.getAttribute('data-section-id');
     this.zoomPictures = [];
     this.ajaxEnabled = container.getAttribute('data-ajax-enabled') === 'true';
 
     this.settings = {
-      // Breakpoints from src/stylesheets/global/variables.scss.liquid
+      // Breakpoints from src/stylesheets/global/letiables.scss.liquid
       mediaQueryMediumUp: 'screen and (min-width: 750px)',
       mediaQuerySmall: 'screen and (max-width: 749px)',
       bpSmall: false,
@@ -7757,7 +7738,7 @@ theme.Product = (function() {
       loader: '[data-loader]',
       loaderStatus: '[data-loader-status]',
       quantity: '[data-quantity-input]',
-      SKU: '.variant-sku',
+      SKU: '.letiant-sku',
       productStatus: '[data-product-status]',
       originalSelectorId: '#ProductSelect-' + sectionId,
       productForm: '[data-product-form]',
@@ -7797,7 +7778,7 @@ theme.Product = (function() {
       productFormErrorMessageWrapperHidden:
         'product-form__error-message-wrapper--hidden',
       activeClass: 'active-thumb',
-      variantSoldOut: 'product-form--variant-sold-out'
+      letiantSoldOut: 'product-form--letiant-sold-out'
     };
 
     this.eventHandlers = {};
@@ -7836,7 +7817,7 @@ theme.Product = (function() {
 
     // Stop parsing if we don't have the product json script tag when loading
     // section in the Theme Editor
-    var productJson = document.getElementById('ProductJson-' + sectionId);
+    let productJson = document.getElementById('ProductJson-' + sectionId);
     if (!productJson || !productJson.innerHTML.length) {
       return;
     }
@@ -7874,7 +7855,7 @@ theme.Product = (function() {
     this.initMobileBreakpoint();
     this.initDesktopBreakpoint();
     this._stringOverrides();
-    this._initVariants();
+    this._initletiants();
     this._initMediaSwitch();
     this._initAddToCart();
     this._setActiveThumbnail();
@@ -7894,7 +7875,7 @@ theme.Product = (function() {
         this.storeAvailabilityContainer
       );
 
-      var storeAvailabilityModalOpenedCallback = function(event) {
+      let storeAvailabilityModalOpenedCallback = function(event) {
         if (
           this.cartPopupWrapper &&
           !this.cartPopupWrapper.classList.contains(
@@ -7951,8 +7932,8 @@ theme.Product = (function() {
       }
     },
 
-    _initVariants: function() {
-      var options = {
+    _initletiants: function() {
+      let options = {
         container: this.container,
         enableHistoryState:
           this.container.getAttribute('data-enable-history-state') === 'true',
@@ -7961,9 +7942,9 @@ theme.Product = (function() {
         product: this.productSingleObject
       };
 
-      this.variants = new slate.Variants(options);
-      if (this.storeAvailability && this.variants.currentVariant.available) {
-        this.storeAvailability.updateContent(this.variants.currentVariant.id);
+      this.letiants = new slate.letiants(options);
+      if (this.storeAvailability && this.letiants.currentletiant.available) {
+        this.storeAvailability.updateContent(this.letiants.currentletiant.id);
       }
 
       this.eventHandlers.updateAvailability = this._updateAvailability.bind(
@@ -7974,19 +7955,19 @@ theme.Product = (function() {
       this.eventHandlers.updateSKU = this._updateSKU.bind(this);
 
       this.container.addEventListener(
-        'variantChange',
+        'letiantChange',
         this.eventHandlers.updateAvailability
       );
       this.container.addEventListener(
-        'variantImageChange',
+        'letiantImageChange',
         this.eventHandlers.updateMedia
       );
       this.container.addEventListener(
-        'variantPriceChange',
+        'letiantPriceChange',
         this.eventHandlers.updatePrice
       );
       this.container.addEventListener(
-        'variantSKUChange',
+        'letiantSKUChange',
         this.eventHandlers.updateSKU
       );
     },
@@ -7996,9 +7977,9 @@ theme.Product = (function() {
         return;
       }
 
-      var self = this;
+      let self = this;
 
-      var productThumbImages = document.querySelectorAll(
+      let productThumbImages = document.querySelectorAll(
         this.selectors.productThumbImages
       );
 
@@ -8007,7 +7988,7 @@ theme.Product = (function() {
       productThumbImages.forEach(function(el) {
         el.addEventListener('click', function(evt) {
           evt.preventDefault();
-          var mediaId = el.getAttribute('data-thumbnail-id');
+          let mediaId = el.getAttribute('data-thumbnail-id');
 
           self._switchMedia(mediaId);
           self._setActiveThumbnail(mediaId);
@@ -8031,7 +8012,7 @@ theme.Product = (function() {
 
           this.previouslyFocusedElement = document.activeElement;
 
-          var isInvalidQuantity =
+          let isInvalidQuantity =
             !!this.quantityInput && this.quantityInput.value <= 0;
 
           if (isInvalidQuantity) {
@@ -8044,16 +8025,15 @@ theme.Product = (function() {
             // request/cart popup is loading and handle loading state
             this._handleButtonLoadingState(true);
             this._addItemToCart(this.productForm);
-            return;
           }
         }.bind(this)
       );
     },
 
     _initProductVideo: function() {
-      var sectionId = this.settings.sectionId;
+      let sectionId = this.settings.sectionId;
 
-      var productMediaTypeVideo = this.container.querySelectorAll(
+      let productMediaTypeVideo = this.container.querySelectorAll(
         this.selectors.productMediaTypeVideo
       );
       productMediaTypeVideo.forEach(function(el) {
@@ -8062,7 +8042,7 @@ theme.Product = (function() {
     },
 
     _initModelViewerLibraries: function() {
-      var modelViewerElements = this.container.querySelectorAll(
+      let modelViewerElements = this.container.querySelectorAll(
         this.selectors.productMediaTypeModel
       );
       if (modelViewerElements.length < 1) return;
@@ -8080,7 +8060,7 @@ theme.Product = (function() {
     },
 
     _initShopifyXrLaunchHandler: function() {
-      var currentMedia = this.container.querySelector(
+      let currentMedia = this.container.querySelector(
         this.selectors.productMediaWrapper +
           ':not(.' +
           self.classes.hidden +
@@ -8095,7 +8075,7 @@ theme.Product = (function() {
     },
 
     _addItemToCart: function(form) {
-      var self = this;
+      let self = this;
 
       fetch(this.cartRoutes.cartAddUrl + '.js', {
         method: 'POST',
@@ -8111,7 +8091,7 @@ theme.Product = (function() {
         })
         .then(function(json) {
           if (json.status && json.status !== 200) {
-            var error = new Error(json.description);
+            let error = new Error(json.description);
             error.isFromServer = true;
             throw error;
           }
@@ -8156,7 +8136,7 @@ theme.Product = (function() {
     },
 
     _showErrorMessage: function(errorMessage) {
-      var errorMessageContainer = this.container.querySelector(
+      let errorMessageContainer = this.container.querySelector(
         this.selectors.errorMessage
       );
       errorMessageContainer.innerHTML = errorMessage;
@@ -8213,11 +8193,11 @@ theme.Product = (function() {
     },
 
     _updateCartPopupContent: function(item) {
-      var self = this;
+      let self = this;
 
-      var quantity = this.quantityInput ? this.quantityInput.value : 1;
+      let quantity = this.quantityInput ? this.quantityInput.value : 1;
 
-      var selling_plan_name = item.selling_plan_allocation
+      let selling_plan_name = item.selling_plan_allocation
         ? item.selling_plan_allocation.selling_plan.name
         : null;
 
@@ -8231,7 +8211,7 @@ theme.Product = (function() {
       this._setCartPopupPlaceholder(item.featured_image.url);
       this._setCartPopupImage(item.featured_image.url, item.featured_image.alt);
       this._setCartPopupProductDetails(
-        item.product_has_only_default_variant,
+        item.product_has_only_default_letiant,
         item.options_with_values,
         item.properties,
         selling_plan_name
@@ -8287,7 +8267,6 @@ theme.Product = (function() {
 
       if (imageUrl === null) {
         this.cartPopupImageWrapper.classList.add(this.classes.hidden);
-        return;
       }
     },
 
@@ -8295,8 +8274,8 @@ theme.Product = (function() {
       if (imageUrl === null) return;
 
       this.cartPopupImageWrapper.classList.remove(this.classes.hidden);
-      var sizedImageUrl = theme.Images.getSizedImageUrl(imageUrl, '200x');
-      var image = document.createElement('img');
+      let sizedImageUrl = theme.Images.getSizedImageUrl(imageUrl, '200x');
+      let image = document.createElement('img');
       image.src = sizedImageUrl;
       image.alt = imageAlt;
       image.classList.add(this.classes.cartImage);
@@ -8311,7 +8290,7 @@ theme.Product = (function() {
     },
 
     _setCartPopupProductDetails: function(
-      product_has_only_default_variant,
+      product_has_only_default_letiant,
       options,
       properties,
       selling_plan_name
@@ -8319,51 +8298,51 @@ theme.Product = (function() {
       this.cartPopupProductDetails =
         this.cartPopupProductDetails ||
         document.querySelector(this.selectors.cartPopupProductDetails);
-      var variantPropertiesHTML = '';
+      let letiantPropertiesHTML = '';
 
-      if (!product_has_only_default_variant) {
-        variantPropertiesHTML =
-          variantPropertiesHTML + this._getVariantOptionList(options);
+      if (!product_has_only_default_letiant) {
+        letiantPropertiesHTML =
+          letiantPropertiesHTML + this._getletiantOptionList(options);
       }
 
       if (selling_plan_name) {
-        variantPropertiesHTML =
-          variantPropertiesHTML + this._getSellingPlanHTML(selling_plan_name);
+        letiantPropertiesHTML =
+          letiantPropertiesHTML + this._getSellingPlanHTML(selling_plan_name);
       }
 
       if (properties !== null && Object.keys(properties).length !== 0) {
-        variantPropertiesHTML =
-          variantPropertiesHTML + this._getPropertyList(properties);
+        letiantPropertiesHTML =
+          letiantPropertiesHTML + this._getPropertyList(properties);
       }
 
-      if (variantPropertiesHTML.length === 0) {
+      if (letiantPropertiesHTML.length === 0) {
         this.cartPopupProductDetails.innerHTML = '';
         this.cartPopupProductDetails.setAttribute('hidden', '');
       } else {
-        this.cartPopupProductDetails.innerHTML = variantPropertiesHTML;
+        this.cartPopupProductDetails.innerHTML = letiantPropertiesHTML;
         this.cartPopupProductDetails.removeAttribute('hidden');
       }
     },
 
-    _getVariantOptionList: function(variantOptions) {
-      var variantOptionListHTML = '';
+    _getletiantOptionList: function(letiantOptions) {
+      let letiantOptionListHTML = '';
 
-      variantOptions.forEach(function(variantOption) {
-        variantOptionListHTML =
-          variantOptionListHTML +
-          '<li class="product-details__item product-details__item--variant-option">' +
-          variantOption.name +
+      letiantOptions.forEach(function(letiantOption) {
+        letiantOptionListHTML =
+          letiantOptionListHTML +
+          '<li class="product-details__item product-details__item--letiant-option">' +
+          letiantOption.name +
           ': ' +
-          variantOption.value +
+          letiantOption.value +
           '</li>';
       });
 
-      return variantOptionListHTML;
+      return letiantOptionListHTML;
     },
 
     _getPropertyList: function(properties) {
-      var propertyListHTML = '';
-      var propertiesArray = Object.entries(properties);
+      let propertyListHTML = '';
+      let propertiesArray = Object.entries(properties);
 
       propertiesArray.forEach(function(property) {
         // Line item properties prefixed with an underscore are not to be displayed
@@ -8386,7 +8365,7 @@ theme.Product = (function() {
     },
 
     _getSellingPlanHTML: function(selling_plan_name) {
-      var sellingPlanHTML =
+      let sellingPlanHTML =
         '<li class="product-details__item product-details__item--property">' +
         selling_plan_name +
         '</li>';
@@ -8398,7 +8377,7 @@ theme.Product = (function() {
       this.cartPopupCartQuantity =
         this.cartPopupCartQuantity ||
         document.querySelector(this.selectors.cartPopupCartQuantity);
-      var ariaLabel;
+      let ariaLabel;
 
       if (quantity === 1) {
         ariaLabel = theme.strings.oneCartCount;
@@ -8437,11 +8416,11 @@ theme.Product = (function() {
     },
 
     _hideCartPopup: function(event) {
-      var setFocus = event.detail === 0 ? true : false;
+      let setFocus = event.detail === 0;
       theme.Helpers.prepareTransition(this.cartPopupWrapper);
       this.cartPopupWrapper.classList.add(this.classes.cartPopupWrapperHidden);
 
-      var cartPopupImage = document.querySelector(
+      let cartPopupImage = document.querySelector(
         this.selectors.cartPopupImage
       );
       if (cartPopupImage) {
@@ -8478,7 +8457,7 @@ theme.Product = (function() {
     },
 
     _onBodyClick: function(event) {
-      var target = event.target;
+      let target = event.target;
 
       if (
         target !== this.cartPopupWrapper &&
@@ -8491,7 +8470,7 @@ theme.Product = (function() {
     _setActiveThumbnail: function(mediaId) {
       // If there is no element passed, find it by the current product image
       if (typeof mediaId === 'undefined') {
-        var productMediaWrapper = this.container.querySelector(
+        let productMediaWrapper = this.container.querySelector(
           this.selectors.productMediaWrapper + ':not(.hide)'
         );
 
@@ -8499,14 +8478,14 @@ theme.Product = (function() {
         mediaId = productMediaWrapper.getAttribute('data-media-id');
       }
 
-      var thumbnailWrappers = this.container.querySelectorAll(
+      let thumbnailWrappers = this.container.querySelectorAll(
         this.selectors.productThumbListItem + ':not(.slick-cloned)'
       );
 
-      var activeThumbnail;
+      let activeThumbnail;
       thumbnailWrappers.forEach(
         function(el) {
-          var current = el.querySelector(
+          let current = el.querySelector(
             this.selectors.productThumbImages +
               "[data-thumbnail-id='" +
               mediaId +
@@ -8518,7 +8497,7 @@ theme.Product = (function() {
         }.bind(this)
       );
 
-      var productThumbImages = document.querySelectorAll(
+      let productThumbImages = document.querySelectorAll(
         this.selectors.productThumbImages
       );
       productThumbImages.forEach(
@@ -8536,10 +8515,10 @@ theme.Product = (function() {
     },
 
     _adjustThumbnailSlider: function(activeThumbnail) {
-      var sliderItem = activeThumbnail.closest('[data-slider-item]');
+      let sliderItem = activeThumbnail.closest('[data-slider-item]');
       if (!sliderItem) return;
 
-      var slideGroupLeaderIndex =
+      let slideGroupLeaderIndex =
         Math.floor(
           Number(sliderItem.getAttribute('data-slider-slide-index')) / 3
         ) * 3;
@@ -8554,18 +8533,18 @@ theme.Product = (function() {
     },
 
     _switchMedia: function(mediaId) {
-      var currentMedia = this.container.querySelector(
+      let currentMedia = this.container.querySelector(
         this.selectors.productMediaWrapper +
           ':not(.' +
           this.classes.hidden +
           ')'
       );
 
-      var newMedia = this.container.querySelector(
+      let newMedia = this.container.querySelector(
         this.selectors.productMediaWrapper + "[data-media-id='" + mediaId + "']"
       );
 
-      var otherMedia = this.container.querySelectorAll(
+      let otherMedia = this.container.querySelectorAll(
         this.selectors.productMediaWrapper +
           ":not([data-media-id='" +
           mediaId +
@@ -8595,9 +8574,9 @@ theme.Product = (function() {
     _handleMediaFocus: function(evt) {
       if (evt.keyCode !== slate.utils.keyboardKeys.ENTER) return;
 
-      var mediaId = evt.currentTarget.getAttribute('data-thumbnail-id');
+      let mediaId = evt.currentTarget.getAttribute('data-thumbnail-id');
 
-      var productMediaWrapper = this.container.querySelector(
+      let productMediaWrapper = this.container.querySelector(
         this.selectors.productMediaWrapper + "[data-media-id='" + mediaId + "']"
       );
       productMediaWrapper.focus();
@@ -8624,17 +8603,17 @@ theme.Product = (function() {
     },
 
     _destroyThumbnailSlider: function() {
-      var sliderButtons = this.container.querySelectorAll(
+      let sliderButtons = this.container.querySelectorAll(
         '[data-slider-button]'
       );
-      var sliderTrack = this.container.querySelector('[data-slider-track]');
-      var sliderItems = sliderTrack.querySelectorAll('[data-slider-item');
+      let sliderTrack = this.container.querySelector('[data-slider-track]');
+      let sliderItems = sliderTrack.querySelectorAll('[data-slider-item]');
       this.settings.sliderActive = false;
 
       if (sliderTrack) {
         sliderTrack.removeAttribute('style');
         sliderItems.forEach(function(sliderItem) {
-          var sliderItemLink = sliderItem.querySelector(
+          let sliderItemLink = sliderItem.querySelector(
             '[data-slider-item-link]'
           );
           sliderItem.classList.remove('slick-active');
@@ -8653,9 +8632,9 @@ theme.Product = (function() {
       this.slideshow = null;
     },
 
-    _liveRegionText: function(variant) {
+    _liveRegionText: function(letiant) {
       // Dummy content for live region
-      var liveRegionText =
+      let liveRegionText =
         '[Availability] [Regular] [$$] [Sale] [$]. [UnitPrice] [$$$]';
 
       if (!this.productState.available) {
@@ -8664,32 +8643,32 @@ theme.Product = (function() {
       }
 
       // Update availability
-      var availability = this.productState.soldOut
+      let availability = this.productState.soldOut
         ? theme.strings.soldOut + ','
         : '';
       liveRegionText = liveRegionText.replace('[Availability]', availability);
 
       // Update pricing information
-      var regularLabel = '';
-      var regularPrice = theme.Currency.formatMoney(
-        variant.price,
+      let regularLabel = '';
+      let regularPrice = theme.Currency.formatMoney(
+        letiant.price,
         theme.moneyFormat
       );
-      var saleLabel = '';
-      var salePrice = '';
-      var unitLabel = '';
-      var unitPrice = '';
+      let saleLabel = '';
+      let salePrice = '';
+      let unitLabel = '';
+      let unitPrice = '';
 
       if (this.productState.onSale) {
         regularLabel = theme.strings.regularPrice;
         regularPrice =
           theme.Currency.formatMoney(
-            variant.compare_at_price,
+            letiant.compare_at_price,
             theme.moneyFormat
           ) + ',';
         saleLabel = theme.strings.sale;
         salePrice = theme.Currency.formatMoney(
-          variant.price,
+          letiant.price,
           theme.moneyFormat
         );
       }
@@ -8697,11 +8676,11 @@ theme.Product = (function() {
       if (this.productState.showUnitPrice) {
         unitLabel = theme.strings.unitPrice;
         unitPrice =
-          theme.Currency.formatMoney(variant.unit_price, theme.moneyFormat) +
+          theme.Currency.formatMoney(letiant.unit_price, theme.moneyFormat) +
           ' ' +
           theme.strings.unitPriceSeparator +
           ' ' +
-          this._getBaseUnit(variant);
+          this._getBaseUnit(letiant);
       }
 
       liveRegionText = liveRegionText
@@ -8717,11 +8696,11 @@ theme.Product = (function() {
     },
 
     _updateLiveRegion: function(evt) {
-      var variant = evt.detail.variant;
-      var liveRegion = this.container.querySelector(
+      let letiant = evt.detail.letiant;
+      let liveRegion = this.container.querySelector(
         this.selectors.productStatus
       );
-      liveRegion.innerHTML = this._liveRegionText(variant);
+      liveRegion.innerHTML = this._liveRegionText(letiant);
       liveRegion.setAttribute('aria-hidden', false);
       // hide content from accessibility tree after announcement
       setTimeout(function() {
@@ -8733,7 +8712,7 @@ theme.Product = (function() {
       this.addToCart.removeAttribute('aria-disabled');
       this.addToCart.setAttribute('aria-label', message);
       this.addToCartText.innerHTML = message;
-      this.productForm.classList.remove(this.classes.variantSoldOut);
+      this.productForm.classList.remove(this.classes.letiantSoldOut);
     },
 
     _disableAddToCart: function(message) {
@@ -8741,7 +8720,7 @@ theme.Product = (function() {
       this.addToCart.setAttribute('aria-disabled', true);
       this.addToCart.setAttribute('aria-label', message);
       this.addToCartText.innerHTML = message;
-      this.productForm.classList.add(this.classes.variantSoldOut);
+      this.productForm.classList.add(this.classes.letiantSoldOut);
     },
 
     _updateAddToCart: function() {
@@ -8758,27 +8737,27 @@ theme.Product = (function() {
     },
 
     /**
-     * The returned productState object keeps track of a number of properties about the current variant and product
+     * The returned productState object keeps track of a number of properties about the current letiant and product
      * Multiple functions within product.js leverage the productState object to determine how to update the page's UI
-     * @param {object} evt - object returned from variant change event
-     * @return {object} productState - current product variant's state
-     *                  productState.available - true if current product options result in valid variant
-     *                  productState.soldOut - true if variant is sold out
-     *                  productState.onSale - true if variant is on sale
-     *                  productState.showUnitPrice - true if variant has unit price value
+     * @param {object} evt - object returned from letiant change event
+     * @return {object} productState - current product letiant's state
+     *                  productState.available - true if current product options result in valid letiant
+     *                  productState.soldOut - true if letiant is sold out
+     *                  productState.onSale - true if letiant is on sale
+     *                  productState.showUnitPrice - true if letiant has unit price value
      */
     _setProductState: function(evt) {
-      var variant = evt.detail.variant;
+      let letiant = evt.detail.letiant;
 
-      if (!variant) {
+      if (!letiant) {
         this.productState.available = false;
         return;
       }
 
       this.productState.available = true;
-      this.productState.soldOut = !variant.available;
-      this.productState.onSale = variant.compare_at_price > variant.price;
-      this.productState.showUnitPrice = !!variant.unit_price;
+      this.productState.soldOut = !letiant.available;
+      this.productState.onSale = letiant.compare_at_price > letiant.price;
+      this.productState.showUnitPrice = !!letiant.unit_price;
     },
 
     _updateAvailability: function(evt) {
@@ -8804,16 +8783,16 @@ theme.Product = (function() {
       }
 
       if (this.productState.available && !this.productState.soldOut) {
-        this.storeAvailability.updateContent(evt.detail.variant.id);
+        this.storeAvailability.updateContent(evt.detail.letiant.id);
       } else {
         this.storeAvailability.clearContent();
       }
     },
 
     _updateMedia: function(evt) {
-      var variant = evt.detail.variant;
-      var mediaId = variant.featured_media.id;
-      var sectionMediaId = this.settings.sectionId + '-' + mediaId;
+      let letiant = evt.detail.letiant;
+      let mediaId = letiant.featured_media.id;
+      let sectionMediaId = this.settings.sectionId + '-' + mediaId;
 
       this._switchMedia(sectionMediaId);
       this._setActiveThumbnail(sectionMediaId);
@@ -8828,9 +8807,9 @@ theme.Product = (function() {
     },
 
     _updatePriceComponentStyles: function(evt) {
-      var variant = evt.detail.variant;
+      let letiant = evt.detail.letiant;
 
-      var unitPriceBaseUnit = this.priceContainer.querySelector(
+      let unitPriceBaseUnit = this.priceContainer.querySelector(
         this.selectors.unitPriceBaseUnit
       );
 
@@ -8846,7 +8825,7 @@ theme.Product = (function() {
       }
 
       if (this.productState.showUnitPrice) {
-        unitPriceBaseUnit.innerHTML = this._getBaseUnit(variant);
+        unitPriceBaseUnit.innerHTML = this._getBaseUnit(letiant);
         this.priceContainer.classList.add(this.classes.productUnitAvailable);
       } else {
         this.priceContainer.classList.remove(this.classes.productUnitAvailable);
@@ -8866,19 +8845,19 @@ theme.Product = (function() {
     },
 
     _updatePrice: function(evt) {
-      var variant = evt.detail.variant;
+      let letiant = evt.detail.letiant;
 
-      var regularPrices = this.priceContainer.querySelectorAll(
+      let regularPrices = this.priceContainer.querySelectorAll(
         this.selectors.regularPrice
       );
-      var salePrice = this.priceContainer.querySelector(
+      let salePrice = this.priceContainer.querySelector(
         this.selectors.salePrice
       );
-      var unitPrice = this.priceContainer.querySelector(
+      let unitPrice = this.priceContainer.querySelector(
         this.selectors.unitPrice
       );
 
-      var formatRegularPrice = function(regularPriceElement, price) {
+      let formatRegularPrice = function(regularPriceElement, price) {
         regularPriceElement.innerHTML = theme.Currency.formatMoney(
           price,
           theme.moneyFormat
@@ -8888,42 +8867,42 @@ theme.Product = (function() {
       // On sale
       if (this.productState.onSale) {
         regularPrices.forEach(function(regularPrice) {
-          formatRegularPrice(regularPrice, variant.compare_at_price);
+          formatRegularPrice(regularPrice, letiant.compare_at_price);
         });
         salePrice.innerHTML = theme.Currency.formatMoney(
-          variant.price,
+          letiant.price,
           theme.moneyFormat
         );
       } else {
         // Regular price
         regularPrices.forEach(function(regularPrice) {
-          formatRegularPrice(regularPrice, variant.price);
+          formatRegularPrice(regularPrice, letiant.price);
         });
       }
 
       // Unit price
       if (this.productState.showUnitPrice) {
         unitPrice.innerHTML = theme.Currency.formatMoney(
-          variant.unit_price,
+          letiant.unit_price,
           theme.moneyFormat
         );
       }
     },
 
-    _getBaseUnit: function(variant) {
-      return variant.unit_price_measurement.reference_value === 1
-        ? variant.unit_price_measurement.reference_unit
-        : variant.unit_price_measurement.reference_value +
-            variant.unit_price_measurement.reference_unit;
+    _getBaseUnit: function(letiant) {
+      return letiant.unit_price_measurement.reference_value === 1
+        ? letiant.unit_price_measurement.reference_unit
+        : letiant.unit_price_measurement.reference_value +
+            letiant.unit_price_measurement.reference_unit;
     },
 
     _updateSKU: function(evt) {
-      var variant = evt.detail.variant;
+      let letiant = evt.detail.letiant;
 
       // Update the sku
-      var sku = document.querySelector(this.selectors.SKU);
+      let sku = document.querySelector(this.selectors.SKU);
       if (!sku) return;
-      sku.innerHTML = variant.sku;
+      sku.innerHTML = letiant.sku;
     },
 
     _enableZoom: function(el, index) {
@@ -8937,19 +8916,19 @@ theme.Product = (function() {
 
     onUnload: function() {
       this.container.removeEventListener(
-        'variantChange',
+        'letiantChange',
         this.eventHandlers.updateAvailability
       );
       this.container.removeEventListener(
-        'variantImageChange',
+        'letiantImageChange',
         this.eventHandlers.updateMedia
       );
       this.container.removeEventListener(
-        'variantPriceChange',
+        'letiantPriceChange',
         this.eventHandlers.updatePrice
       );
       this.container.removeEventListener(
-        'variantSKUChange',
+        'letiantSKUChange',
         this.eventHandlers.updateSKU
       );
       theme.ProductVideo.removeSectionVideos(this.settings.sectionId);
@@ -8970,9 +8949,9 @@ theme.Product = (function() {
 
 theme.ProductRecommendations = (function() {
   function ProductRecommendations(container) {
-    var baseUrl = container.dataset.baseUrl;
-    var productId = container.dataset.productId;
-    var recommendationsSectionUrl =
+    let baseUrl = container.dataset.baseUrl;
+    let productId = container.dataset.productId;
+    let recommendationsSectionUrl =
       baseUrl +
       '?section_id=product-recommendations&product_id=' +
       productId +
@@ -9008,13 +8987,13 @@ theme.ProductRecommendations = (function() {
 })();
 
 theme.Quotes = (function() {
-  var config = {
+  let config = {
     mediaQuerySmall: 'screen and (max-width: 749px)',
     mediaQueryMediumUp: 'screen and (min-width: 750px)',
     slideCount: 0
   };
 
-  var defaults = {
+  let defaults = {
     canUseKeyboardArrows: false,
     type: 'slide',
     slidesToShow: 3
@@ -9022,7 +9001,7 @@ theme.Quotes = (function() {
 
   function Quotes(container) {
     this.container = container;
-    var sectionId = container.getAttribute('data-section-id');
+    let sectionId = container.getAttribute('data-section-id');
     this.slider = document.getElementById('Quotes-' + sectionId);
 
     this.sliderActive = false;
@@ -9059,12 +9038,12 @@ theme.Quotes = (function() {
       this.slideshow.destroy();
     },
 
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line no-unused-lets
     onBlockSelect: function(evt) {
-      var slide = document.querySelector(
+      let slide = document.querySelector(
         '.quotes-slide--' + evt.detail.blockId
       );
-      var slideIndex = Number(slide.getAttribute('data-slider-slide-index'));
+      let slideIndex = Number(slide.getAttribute('data-slider-slide-index'));
 
       if (this.mqlMediumUp.matches) {
         slideIndex = Math.max(
@@ -9088,7 +9067,7 @@ theme.Quotes = (function() {
       }
     },
 
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line no-unused-lets
     _initSlider: function(args) {
       if (this.sliderActive) {
         this.slideshow.destroy();
@@ -9104,12 +9083,12 @@ theme.Quotes = (function() {
 })();
 
 theme.SlideshowSection = (function() {
-  var selectors = {
+  let selectors = {
     sliderMobileContentIndex: '[data-slider-mobile-content-index]'
   };
 
   function SlideshowSection(container) {
-    var sectionId = container.dataset.sectionId;
+    let sectionId = container.dataset.sectionId;
 
     this.container = container;
     this.eventHandlers = {};
@@ -9144,7 +9123,7 @@ theme.SlideshowSection.prototype = Object.assign(
     },
 
     _onSliderSlideChanged: function(slideIndex) {
-      var activeClass = 'slideshow__text-content--mobile-active';
+      let activeClass = 'slideshow__text-content--mobile-active';
 
       this.sliderMobileContentIndex.forEach(function(element) {
         if (
@@ -9168,10 +9147,10 @@ theme.SlideshowSection.prototype = Object.assign(
       }
 
       // Get slide's index using theme editor's id
-      var slide = this.container.querySelector(
+      let slide = this.container.querySelector(
         '.slideshow__slide--' + evt.detail.blockId
       );
-      var slideIndex = slide.getAttribute('data-slider-slide-index');
+      let slideIndex = slide.getAttribute('data-slider-slide-index');
 
       // Go to selected slide, pause auto-rotate
       this.slideshow.setSlide(slideIndex);
@@ -9188,35 +9167,35 @@ theme.SlideshowSection.prototype = Object.assign(
 window.theme = window.theme || {};
 
 theme.StoreAvailability = (function() {
-  var selectors = {
+  let selectors = {
     storeAvailabilityModalOpen: '[data-store-availability-modal-open]',
     storeAvailabilityModalProductTitle:
       '[data-store-availability-modal-product-title]',
-    storeAvailabilityModalVariantTitle:
-      '[data-store-availability-modal-variant-title]'
+    storeAvailabilityModalletiantTitle:
+      '[data-store-availability-modal-letiant-title]'
   };
 
-  var classes = {
+  let classes = {
     hidden: 'hide'
   };
 
   function StoreAvailability(container) {
     this.container = container;
     this.productTitle = this.container.dataset.productTitle;
-    this.hasOnlyDefaultVariant =
-      this.container.dataset.hasOnlyDefaultVariant === 'true';
+    this.hasOnlyDefaultletiant =
+      this.container.dataset.hasOnlyDefaultletiant === 'true';
   }
 
   StoreAvailability.prototype = Object.assign({}, StoreAvailability.prototype, {
-    updateContent: function(variantId) {
-      var variantSectionUrl =
+    updateContent: function(letiantId) {
+      let letiantSectionUrl =
         this.container.dataset.baseUrl +
-        '/variants/' +
-        variantId +
+        '/letiants/' +
+        letiantId +
         '/?section_id=store-availability';
-      var self = this;
+      let self = this;
 
-      var storeAvailabilityModalOpen = self.container.querySelector(
+      let storeAvailabilityModalOpen = self.container.querySelector(
         selectors.storeAvailabilityModalOpen
       );
 
@@ -9226,7 +9205,7 @@ theme.StoreAvailability = (function() {
         storeAvailabilityModalOpen.setAttribute('aria-busy', true);
       }
 
-      fetch(variantSectionUrl)
+      fetch(letiantSectionUrl)
         .then(function(response) {
           return response.text();
         })
@@ -9254,8 +9233,8 @@ theme.StoreAvailability = (function() {
 
           self.modal = self._initModal();
           self._updateProductTitle();
-          if (self.hasOnlyDefaultVariant) {
-            self._hideVariantTitle();
+          if (self.hasOnlyDefaultletiant) {
+            self._hideletiantTitle();
           }
         });
     },
@@ -9286,17 +9265,17 @@ theme.StoreAvailability = (function() {
     },
 
     _updateProductTitle: function() {
-      var storeAvailabilityModalProductTitle = this.container.querySelector(
+      let storeAvailabilityModalProductTitle = this.container.querySelector(
         selectors.storeAvailabilityModalProductTitle
       );
       storeAvailabilityModalProductTitle.textContent = this.productTitle;
     },
 
-    _hideVariantTitle: function() {
-      var storeAvailabilityModalVariantTitle = this.container.querySelector(
-        selectors.storeAvailabilityModalVariantTitle
+    _hideletiantTitle: function() {
+      let storeAvailabilityModalletiantTitle = this.container.querySelector(
+        selectors.storeAvailabilityModalletiantTitle
       );
-      storeAvailabilityModalVariantTitle.classList.add(classes.hidden);
+      storeAvailabilityModalletiantTitle.classList.add(classes.hidden);
     }
   });
 
@@ -9324,8 +9303,8 @@ theme.heros = {};
 
 theme.HeroSection = (function() {
   function HeroSection(container) {
-    var sectionId = container.getAttribute('data-section-id');
-    var hero = '#Hero-' + sectionId;
+    let sectionId = container.getAttribute('data-section-id');
+    let hero = '#Hero-' + sectionId;
     theme.heros[hero] = new theme.Hero(hero, sectionId);
   }
 
@@ -9334,7 +9313,7 @@ theme.HeroSection = (function() {
 
 window.theme = window.theme || {};
 
-var selectors = {
+let selectors = {
   disclosureLocale: '[data-disclosure-locale]',
   disclosureCountry: '[data-disclosure-country]'
 };
@@ -9384,7 +9363,7 @@ theme.FooterSection = (function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  var sections = new theme.Sections();
+  let sections = new theme.Sections();
 
   sections.register('cart-template', theme.Cart);
   sections.register('product', theme.Product);
@@ -9403,7 +9382,7 @@ document.addEventListener('DOMContentLoaded', function() {
   theme.customerTemplates.init();
 
   // Theme-specific selectors to make tables scrollable
-  var tableSelectors = '.rte table,' + '.custom__item-inner--html table';
+  let tableSelectors = '.rte table,' + '.custom__item-inner--html table';
 
   slate.rte.wrapTable({
     tables: document.querySelectorAll(tableSelectors),
@@ -9411,7 +9390,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Theme-specific selectors to make iframes responsive
-  var iframeSelectors =
+  let iframeSelectors =
     '.rte iframe[src*="youtube.com/embed"],' +
     '.rte iframe[src*="player.vimeo"],' +
     '.custom__item-inner--html iframe[src*="youtube.com/embed"],' +
@@ -9427,7 +9406,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById(window.location.hash.substr(1))
   );
 
-  var inPageLink = document.querySelector('.in-page-link');
+  let inPageLink = document.querySelector('.in-page-link');
   if (inPageLink) {
     inPageLink.addEventListener('click', function(evt) {
       slate.a11y.pageLinkFocus(
@@ -9455,21 +9434,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   theme.FormStatus.init();
 
-  var selectors = {
+  let selectors = {
     image: '[data-image]',
     lazyloaded: '.lazyloaded'
   };
 
   document.addEventListener('lazyloaded', function(evt) {
-    var image = evt.target;
+    let image = evt.target;
 
     removeImageLoadingAnimation(image);
 
     if (document.body.classList.contains('template-index')) {
-      var mainContent = document.getElementById('MainContent');
+      let mainContent = document.getElementById('MainContent');
 
       if (mainContent && mainContent.children && mainContent.children.length) {
-        var firstSection = document.getElementsByClassName('index-section')[0];
+        let firstSection = document.getElementsByClassName('index-section')[0];
 
         if (!firstSection.contains(image)) return;
 
@@ -9478,11 +9457,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (image.hasAttribute('data-bgset')) {
-      var innerImage = image.querySelector(selectors.lazyloaded);
+      let innerImage = image.querySelector(selectors.lazyloaded);
 
       if (innerImage) {
-        var alt = image.getAttribute('data-alt');
-        var src = innerImage.hasAttribute('data-src')
+        let alt = image.getAttribute('data-alt');
+        let src = innerImage.hasAttribute('data-src')
           ? innerImage.getAttribute('data-src')
           : image.getAttribute('data-bg');
 
@@ -9500,7 +9479,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // event listener has been attached. When this happens, the following function
   // hides the loading placeholders.
   function onLoadHideLazysizesAnimation() {
-    var alreadyLazyloaded = document.querySelectorAll('.lazyloaded');
+    let alreadyLazyloaded = document.querySelectorAll('.lazyloaded');
     alreadyLazyloaded.forEach(function(image) {
       removeImageLoadingAnimation(image);
     });
@@ -9523,15 +9502,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Youtube API callback
-// eslint-disable-next-line no-unused-vars
-function onYouTubeIframeAPIReady() {
-  theme.Video.loadVideos();
-}
-
 function removeImageLoadingAnimation(image) {
   // Remove loading animation
-  var imageWrapper = image.hasAttribute('data-image-loading-animation')
+  let imageWrapper = image.hasAttribute('data-image-loading-animation')
     ? image
     : image.closest('[data-image-loading-animation]');
 
@@ -9547,15 +9520,15 @@ if(document.getElementById('addQty') || document.getElementById('minusQty')){
     if ( Qcount < 0 ) QInput.value = 0;
     QInput.value = Qcount + 1
   })
-  
-  
+
+
   document.getElementById('minusQty').addEventListener('click', ()=>{
     Qcount = +QInput.value
     if ( Qcount < 0 ) QInput.value = 0;
-    if ( Qcount == 0 ) return;
+    if ( Qcount === 0 ) return;
     QInput.value = Qcount - 1
   })
-  
+
 }
 
 document.getElementById('mobileClose').addEventListener('click', ()=>{

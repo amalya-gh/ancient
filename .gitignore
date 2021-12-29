@@ -1,2 +1,9 @@
 config.yml*
 *.yml
+node_modules
+.idea
+/.vscode
+/.idea
+/package.json
+/package-lock.json
+/node_modules
