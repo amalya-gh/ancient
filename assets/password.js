@@ -1,22 +1,22 @@
-(function() {
-  var selectors = {
+(function () {
+  let selectors = {
     loginModal: '#LoginModal',
-    loginField: '[data-login-field]'
+    loginField: '[data-login-field]',
   };
 
-  var data = {
-    formError: 'data-error'
+  let data = {
+    formError: 'data-error',
   };
 
-  var loginModal = document.querySelector(selectors.loginModal);
-  var loginField = document.querySelector(selectors.loginField);
+  let loginModal = document.querySelector(selectors.loginModal);
+  let loginField = document.querySelector(selectors.loginField);
 
   if (!loginModal) {
     return;
   }
 
-  var passwordModal = new window.Modals('LoginModal', 'login-modal', {
-    focusOnOpen: 'Password'
+  let passwordModal = new window.Modals('LoginModal', 'login-modal', {
+    focusOnOpen: 'Password',
   });
 
   // Open modal if errors exist
