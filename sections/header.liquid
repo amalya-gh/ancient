@@ -65,7 +65,7 @@
       {% if section.settings.align_logo == 'center' %}
         {%- assign logo_classes = 'medium-up--one-third medium-up--push-one-third logo-align--center' -%}
       {% else %}
-        {%- assign logo_classes = 'medium-up--one-quarter logo-align--left' -%}
+        {%- assign logo_classes = 'medium-up--three-tenths logo-align--left' -%}
       {% endif %}
 
       <div class="grid__item {{ logo_classes }}">
@@ -110,15 +110,15 @@
 
 
       {% if section.settings.align_logo == 'left' %}
-        <nav class="grid__item medium-up--seven-eighths small--hide" id="AccessibleNav" role="navigation">
+        <nav class="grid__item medium-up--six-tenths small--hide" id="AccessibleNav" role="navigation">
           {% render 'site-nav', linklist: section.settings.main_linklist %}
         </nav>
       {% endif %}
 
-      <div class="grid__item {% if section.settings.align_logo == 'left' %}medium-up--one-eighth{% else %}medium-up--one-third medium-up--push-one-third{% endif %} text-right site-header__icons{% if shop.customer_accounts_enabled %} site-header__icons--plus{% endif %}">
+      <div class="grid__item {% if section.settings.align_logo == 'left' %}medium-up--one-tenth{% else %}medium-up--one-third medium-up--push-one-third{% endif %} text-right site-header__icons{% if shop.customer_accounts_enabled %} site-header__icons--plus{% endif %}">
         <div class="site-header__icons-wrapper">
-          <button type="button" class="btn--link site-header__icon" >
-            {% render 'icon-search' %}
+          <button type="button" class="search-desktop btn--link site-header__icon site-header__search-toggle js-drawer-open-top" data-predictive-search-open-drawer>
+            {% include 'icon-search' %}
             <span class="icon__fallback-text">{{ 'layout.navigation.search' | t }}</span>
           </button>
 
@@ -141,17 +141,45 @@
 
   </header>
    <nav class="mobile-nav-wrapper medium-up--hide critical-hidden" role="navigation">
-
    <svg id="mobileClose" aria-hidden="true" focusable="false" role="presentation"  width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line x1="1.35355" y1="0.646452" x2="25.3535" y2="24.6464" stroke="white"/>
     <line  x1="0.646447" y1="24.6464" x2="24.6464" y2="0.646442" stroke="white"/>
     </svg>
 
       <ul id="MobileNav" class="mobile-nav">
+        <li>
+          <form class="search-form search-bar__form" action="{{ routes.search_url }}" method="get" role="search">
+            <div class="search-form__input-wrapper">
+              <input
+                type="text"
+                name="q"
+                placeholder="{{ 'general.search.placeholder' | t }}"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-owns="predictive-search-results"
+                aria-expanded="false"
+                aria-label="{{ 'general.search.placeholder' | t }}"
+                aria-haspopup="listbox"
+                class="search-form__input search-form__input-mobile"
+                data-predictive-search-drawer-input
+                data-base-url="{{ routes.search_url }}"
+              />
+              <input type="hidden" name="options[prefix]" value="last" aria-hidden="true" />
+              <div class="predictive-search-wrapper predictive-search-wrapper--drawer" data-predictive-search-mount="drawer"></div>
+            </div>
+
+            <button class="search-bar__submit search-form__submit"
+                    type="submit"
+                    data-search-form-submit>
+              {% render 'icon-search-mobile' %}
+              <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
+            </button>
+          </form>
+        </li>
         {% for link in linklists[section.settings.main_linklist].links %}
           {%- assign outerLoopIndex = forloop.index -%}
 
-          <li class="mobile-nav__item{% unless forloop.last %} border-bottom{% endunless %}">
+          <li class="mobile-nav__item border-bottom">
             {% if link.links != blank %}
               {% capture child_list_handle %}{{ link.handle }}-{{ outerLoopIndex }}{% endcapture %}
               <button type="button" class="btn--link js-toggle-submenu mobile-nav__link{% if link.child_active %} mobile-nav__link--active{% endif %}" data-target="{{ child_list_handle }}" data-level="1" aria-expanded="false">
@@ -178,7 +206,7 @@
                 </li>
 
                 {% for childlink in link.links %}
-                  <li class="mobile-nav__item{% unless forloop.last %} border-bottom{% endunless %}">
+                  <li class="mobile-nav__item border-bottom">
                     {% if childlink.links != blank %}
                       {% capture grandchild_list_handle %}{{ childlink.handle }}-{{ outerLoopIndex }}-{{ forloop.index }}{% endcapture %}
                       <button type="button" class="btn--link js-toggle-submenu mobile-nav__link mobile-nav__sublist-link" data-target="{{ grandchild_list_handle }}" aria-expanded="false">
@@ -207,7 +235,7 @@
                           </div>
                         </li>
                         {% for grandchildlink in childlink.links %}
-                          <li class="mobile-nav__item{% unless forloop.last %} border-bottom{% endunless %}">
+                          <li class="mobile-nav__item border-bottom">
                             <a href="{{ grandchildlink.url }}"
                               class="mobile-nav__sublist-link"
                               {% if grandchildlink.current %} aria-current="page"{% endif %}

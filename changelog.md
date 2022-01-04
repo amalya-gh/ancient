@@ -1,3 +1,7 @@
+## [1.3.1] - 2021-12-29
+### Fix
+- Fix correct style for each page
+
 ## [1.3.0] - 2021-12-24
 ### Fix
 - Add linters and fix all problems

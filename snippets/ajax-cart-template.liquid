@@ -1,20 +1,29 @@
 <!-- /snippets/ajax-cart-template.liquid -->
 
 <script id="CartTemplate" type="text/template">
+    <div class="drawer__header">
+      <div class="table-cell">
+        <h3>{{ 'cart.general.title' | t }} ({% raw %}{{{all_count}}}{% endraw %} items)</h3>
 
+      </div>
+      <div class="table-cell">
+      <span class="close-cart">
+        {% render 'icon-cart-close' %}
+      </span>
+      </div>
+    </div>
     {% raw %}
     <form action="/cart" method="post" novalidate class="cart ajaxcart">
         <div class="ajaxcart__inner">
             {{#items}}
             <div class="ajaxcart__product">
                 <div class="ajaxcart row" data-line="{{line}}">
-
                     <div class="flex__item one-quarter no-padding">
                         <a href="{{url}}" class="ajaxcart__product-image"><img src="{{img}}" alt=""></a>
                     </div>
                     <div class="flex__item three-quarters ajaxcart-right">
                         <p class="ajax-rtinnerleft">
-                            <a href="{{url}}" class="ajaxcart__product-name">{{name}}</a>
+                            <a href="{{url}}" class="ajaxcart__product-name">{{description}}</a>
                             {% endraw %}{% raw %}
                         </p>
                         <p class="ajax-rtinnerright">{{{price}}}</p>
@@ -23,19 +32,19 @@
 
                             <div class="ajaxcart__qty">
                                 <button type="button"
-                                        class="ajaxcart__qty-adjust ajaxcart__qty--plus quantity-increment"
-                                        data-id="{{id}}" data-line="{{line}}" data-qty="{{itemAdd}}">
-                                    <span>+</span>
+                                        class="ajaxcart__qty-adjust ajaxcart__qty--minus quantity-increment"
+                                        data-id="{{id}}" data-qty="{{itemMinus}}" data-line="{{line}}">
+                                  <span>-</span>
                                 </button>
                                 <input type="text" name="updates[]" class="ajaxcart__qty-num" value="{{itemQty}}"
                                        min="0" data-id="{{id}}" data-line="{{line}}" aria-label="quantity"
                                        pattern="[0-9]*">
-
                                 <button type="button"
-                                        class="ajaxcart__qty-adjust ajaxcart__qty--minus quantity-increment"
-                                        data-id="{{id}}" data-qty="{{itemMinus}}" data-line="{{line}}">
-                                    <span>-</span>
+                                        class="ajaxcart__qty-adjust ajaxcart__qty--plus quantity-increment"
+                                        data-id="{{id}}" data-line="{{line}}" data-qty="{{itemAdd}}">
+                                  <span>+</span>
                                 </button>
+
                             </div>
                             <!-- <div class="ajaxremove">
                                 <a href="/cart/change?line={{line}}&amp;quantity=0" class="ajaxifyCartremove"
@@ -57,7 +66,7 @@
                     <p><strong>{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %}</strong></p>
                 </div>
                 <div class="ajaxsubtotal">
-                    <p class="text-right">{{{totalPrice}}}</p>
+                  <p class="text-right"><b>{{{totalPrice}}}</b></p>
                 </div>
             </div>
             <div class="cartview">

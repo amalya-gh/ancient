@@ -56,7 +56,7 @@
         "other": "{{ count }} results for “{{ terms }}”"
       },
       "title": "Search our site",
-      "placeholder": "Search",
+      "placeholder": "Type your search",
       "submit": "Submit",
       "close": "Close search",
       "heading": {
@@ -157,7 +157,7 @@
   },
   "cart": {
     "general": {
-      "title": "Cart Items",
+      "title": "Cart",
       "note": "Add a note to your order",
       "removed_item_html": "Removed <span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}<\/span> from your cart.",
       "remove": "Remove",

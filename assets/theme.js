@@ -9536,3 +9536,12 @@ document.getElementById('mobileClose').addEventListener('click', ()=>{
   document.querySelector('.mobile-nav-wrapper').style.transform='translateY(-100%)'
   document.getElementById('PageContainer').setAttribute('style', '')
 })
+
+let a = document.getElementsByClassName('slideshow__subtitle')[0].innerHTML.replace("$29.95",'<del style="font-weight: 500;opacity: 0.5; margin-left:15px">$29.95</del>' );
+document.getElementsByClassName('slideshow__subtitle')[0].innerHTML = a
+
+
+let mob = document.getElementsByClassName('slideshow__subtitle--mobile')[0].innerHTML.replace("$29.95",'<del style="font-weight: 500;opacity: 0.5; margin-left:15px">$29.95</del>' );
+document.getElementsByClassName('slideshow__subtitle--mobile')[0].innerHTML = mob
+
+

@@ -33,3 +33,13 @@
 /* ================ Product video ================ */
 
 /* ================ Image placeholder ================ */
+
+
+
+.slider-nav > .slick-prev::before{
+  position: absolute;
+  top: -6px;
+
+  content: url(https://cdn.shopify.com/s/files/1/0495/1405/3798/files/black_next.png?v=1641230566);
+  transform: rotate(180deg);
+}

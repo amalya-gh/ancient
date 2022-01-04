@@ -267,7 +267,7 @@ var ajaxCart = (function(module, $) {
       } else {
         var prodImg = "//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif";
       }
-      // console.log(cartItem.variant_title);
+      // console.log(cartItem, 'sgdfzdhgfhds');
       // Create item's data object and add to 'items' array
       item = {
         id: cartItem.variant_id,
@@ -280,6 +280,7 @@ var ajaxCart = (function(module, $) {
         itemAdd: cartItem.quantity + 1,
         itemMinus: cartItem.quantity - 1,
         itemQty: cartItem.quantity,
+        description:cartItem.product_description,
         price: theme.Currency.formatMoney(cartItem.price, settings.moneyFormat),
         vendor: cartItem.vendor
       };
@@ -291,7 +292,8 @@ var ajaxCart = (function(module, $) {
     data = {
       items: items,
       note: cart.note,
-      totalPrice:theme.Currency.formatMoney(cart.total_price, settings.moneyFormat)
+      totalPrice:theme.Currency.formatMoney(cart.total_price, settings.moneyFormat),
+      all_count: cart.item_count
     }
 
     $cartContainer.append(template(data));
@@ -300,6 +302,7 @@ var ajaxCart = (function(module, $) {
   };
 
   cartCallback = function(cart) {
+    $('#cart_layer').toggleClass("display_none");
     $body.removeClass('drawer--is-loading');
     $body.trigger('ajaxCart.afterCartLoad', cart);
 
@@ -519,7 +522,10 @@ var ajaxCart = (function(module, $) {
     load: loadCart
   };
 
-
+  $('body').on( "click", ".close-cart", function() {
+    $('body').toggleClass("iscartpopup");
+    $('#cart_layer').toggleClass("display_none");
+  } );
 
   return module;
 
